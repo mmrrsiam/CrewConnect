@@ -5,6 +5,35 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="JobMeModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="AspNetUsers">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="nvarchar" MaxLength="450" Nullable="false" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="256" Nullable="false" />
+          <Property Name="NormalizedUserName" Type="nvarchar" MaxLength="256" />
+          <Property Name="Email" Type="nvarchar" MaxLength="256" Nullable="false" />
+          <Property Name="NormalizedEmail" Type="nvarchar" MaxLength="256" />
+          <Property Name="EmailConfirmed" Type="bit" Nullable="false" />
+          <Property Name="PasswordHash" Type="nvarchar(max)" />
+          <Property Name="SecurityStamp" Type="nvarchar(max)" />
+          <Property Name="ConcurrencyStamp" Type="nvarchar(max)" />
+          <Property Name="PhoneNumber" Type="nvarchar(max)" />
+          <Property Name="PhoneNumberConfirmed" Type="bit" Nullable="false" />
+          <Property Name="TwoFactorEnabled" Type="bit" Nullable="false" />
+          <Property Name="LockoutEnd" Type="datetimeoffset" Precision="7" />
+          <Property Name="LockoutEnabled" Type="bit" Nullable="false" />
+          <Property Name="AccessFailedCount" Type="int" Nullable="false" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="256" />
+          <Property Name="Surname" Type="nvarchar" MaxLength="256" />
+          <Property Name="Dob" Type="date" />
+          <Property Name="ProfilePicURL" Type="nvarchar" MaxLength="500" />
+          <Property Name="LastLogin" Type="datetime" />
+          <Property Name="Address1" Type="varchar" MaxLength="100" />
+          <Property Name="Address2" Type="varchar" MaxLength="100" />
+          <Property Name="City" Type="varchar" MaxLength="100" />
+          <Property Name="Province" Type="varchar" MaxLength="100" />
+        </EntityType>
         <EntityType Name="BatchNumber">
           <Key>
             <PropertyRef Name="Batch" />
@@ -82,6 +111,7 @@
           <Property Name="DateUpdated" Type="datetime" />
           <Property Name="UpdatedBy" Type="nvarchar" MaxLength="450" />
           <Property Name="IsDeleted" Type="bit" Nullable="false" />
+          <Property Name="Email" Type="varchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="ServiceProvider_Recommendation">
           <Key>
@@ -303,12 +333,13 @@
           <Property Name="Password" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Active" Type="bit" Nullable="false" />
           <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Email" Type="varchar" MaxLength="150" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'JobMe.dbo.AvailableServices' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="AvailableServices">
           <Key>
-            <PropertyRef Name="ID" />
+            <PropertyRef Name="Id" />
             <PropertyRef Name="SubServiceType" />
             <PropertyRef Name="ServiceType" />
             <PropertyRef Name="ServiceProviderId" />
@@ -318,8 +349,9 @@ warning 6002: The table/view 'JobMe.dbo.AvailableServices' does not have a prima
             <PropertyRef Name="Rank" />
             <PropertyRef Name="Latitude" />
             <PropertyRef Name="Longitude" />
+            <PropertyRef Name="ServiceProvider_LocationID" />
           </Key>
-          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="Id" Type="int" Nullable="false" />
           <Property Name="SubServiceType" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="ServiceType" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="ServiceProviderId" Type="int" Nullable="false" />
@@ -331,6 +363,7 @@ warning 6002: The table/view 'JobMe.dbo.AvailableServices' does not have a prima
           <Property Name="Latitude" Type="decimal" Precision="9" Scale="6" Nullable="false" />
           <Property Name="Longitude" Type="decimal" Precision="9" Scale="6" Nullable="false" />
           <Property Name="CalloutFee" Type="money" />
+          <Property Name="ServiceProvider_LocationID" Type="int" Nullable="false" />
         </EntityType>
         <Association Name="FK_ServiceProvider_Accreditation_ServiceProvider">
           <End Role="ServiceProvider" Type="Self.ServiceProvider" Multiplicity="1" />
@@ -341,6 +374,18 @@ warning 6002: The table/view 'JobMe.dbo.AvailableServices' does not have a prima
             </Principal>
             <Dependent Role="ServiceProvider_Accreditation">
               <PropertyRef Name="ServiceProviderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ServiceProvider_AspNetUsers">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
+          <End Role="ServiceProvider" Type="Self.ServiceProvider" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ServiceProvider">
+              <PropertyRef Name="AspNetUserId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -365,6 +410,18 @@ warning 6002: The table/view 'JobMe.dbo.AvailableServices' does not have a prima
             </Principal>
             <Dependent Role="ServiceProvider_Location">
               <PropertyRef Name="ServiceProviderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ServiceProvider_Recommendation_AspNetUsers">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
+          <End Role="ServiceProvider_Recommendation" Type="Self.ServiceProvider_Recommendation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ServiceProvider_Recommendation">
+              <PropertyRef Name="RecommenderAspNetUserId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -413,6 +470,18 @@ warning 6002: The table/view 'JobMe.dbo.AvailableServices' does not have a prima
             </Principal>
             <Dependent Role="ServiceProvider_TermsAndConditions">
               <PropertyRef Name="ServiceProviderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ServiceRequest_AspNetUsers">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
+          <End Role="ServiceRequest" Type="Self.ServiceRequest" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ServiceRequest">
+              <PropertyRef Name="RequesterAspNetUserId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -561,6 +630,7 @@ warning 6002: The table/view 'JobMe.dbo.AvailableServices' does not have a prima
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="JobMeModelStoreContainer">
+          <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="BatchNumber" EntityType="Self.BatchNumber" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ServiceLookup" EntityType="Self.ServiceLookup" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ServiceProvider" EntityType="Self.ServiceProvider" Schema="dbo" store:Type="Tables" />
@@ -584,7 +654,7 @@ warning 6002: The table/view 'JobMe.dbo.AvailableServices' does not have a prima
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AvailableServices" EntityType="Self.AvailableServices" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
-    [AvailableServices].[ID] AS [ID], 
+    [AvailableServices].[Id] AS [Id], 
     [AvailableServices].[SubServiceType] AS [SubServiceType], 
     [AvailableServices].[ServiceType] AS [ServiceType], 
     [AvailableServices].[ServiceProviderId] AS [ServiceProviderId], 
@@ -595,12 +665,17 @@ warning 6002: The table/view 'JobMe.dbo.AvailableServices' does not have a prima
     [AvailableServices].[Rank] AS [Rank], 
     [AvailableServices].[Latitude] AS [Latitude], 
     [AvailableServices].[Longitude] AS [Longitude], 
-    [AvailableServices].[CalloutFee] AS [CalloutFee]
+    [AvailableServices].[CalloutFee] AS [CalloutFee], 
+    [AvailableServices].[ServiceProvider_LocationID] AS [ServiceProvider_LocationID]
     FROM [dbo].[AvailableServices] AS [AvailableServices]</DefiningQuery>
           </EntitySet>
           <AssociationSet Name="FK_ServiceProvider_Accreditation_ServiceProvider" Association="Self.FK_ServiceProvider_Accreditation_ServiceProvider">
             <End Role="ServiceProvider" EntitySet="ServiceProvider" />
             <End Role="ServiceProvider_Accreditation" EntitySet="ServiceProvider_Accreditation" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ServiceProvider_AspNetUsers" Association="Self.FK_ServiceProvider_AspNetUsers">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="ServiceProvider" EntitySet="ServiceProvider" />
           </AssociationSet>
           <AssociationSet Name="FK_ServiceProvider_Image_ServiceProvider" Association="Self.FK_ServiceProvider_Image_ServiceProvider">
             <End Role="ServiceProvider" EntitySet="ServiceProvider" />
@@ -609,6 +684,10 @@ warning 6002: The table/view 'JobMe.dbo.AvailableServices' does not have a prima
           <AssociationSet Name="FK_ServiceProvider_Location_ServiceProvider" Association="Self.FK_ServiceProvider_Location_ServiceProvider">
             <End Role="ServiceProvider" EntitySet="ServiceProvider" />
             <End Role="ServiceProvider_Location" EntitySet="ServiceProvider_Location" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ServiceProvider_Recommendation_AspNetUsers" Association="Self.FK_ServiceProvider_Recommendation_AspNetUsers">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="ServiceProvider_Recommendation" EntitySet="ServiceProvider_Recommendation" />
           </AssociationSet>
           <AssociationSet Name="FK_ServiceProvider_Recommendation_ServiceProvider" Association="Self.FK_ServiceProvider_Recommendation_ServiceProvider">
             <End Role="ServiceProvider" EntitySet="ServiceProvider" />
@@ -625,6 +704,10 @@ warning 6002: The table/view 'JobMe.dbo.AvailableServices' does not have a prima
           <AssociationSet Name="FK_ServiceProvider_TermsAndConditions_ServiceProvider" Association="Self.FK_ServiceProvider_TermsAndConditions_ServiceProvider">
             <End Role="ServiceProvider" EntitySet="ServiceProvider" />
             <End Role="ServiceProvider_TermsAndConditions" EntitySet="ServiceProvider_TermsAndConditions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ServiceRequest_AspNetUsers" Association="Self.FK_ServiceRequest_AspNetUsers">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="ServiceRequest" EntitySet="ServiceRequest" />
           </AssociationSet>
           <AssociationSet Name="FK_ServiceRequest_Invoice_Line_Item_ServiceRequest_Invoice_Line" Association="Self.FK_ServiceRequest_Invoice_Line_Item_ServiceRequest_Invoice_Line">
             <End Role="ServiceRequest_Invoice_Line" EntitySet="ServiceRequest_Invoice_Line" />
@@ -714,6 +797,7 @@ warning 6002: The table/view 'JobMe.dbo.AvailableServices' does not have a prima
           <NavigationProperty Name="ServiceProvider_Recommendation" Relationship="Self.FK_ServiceProvider_Recommendation_ServiceProvider" FromRole="ServiceProvider" ToRole="ServiceProvider_Recommendation" />
           <NavigationProperty Name="ServiceProvider_SubServiceType" Relationship="Self.FK_ServiceProvider_SubServiceType_ServiceProvider" FromRole="ServiceProvider" ToRole="ServiceProvider_SubServiceType" />
           <NavigationProperty Name="ServiceProvider_TermsAndConditions" Relationship="Self.FK_ServiceProvider_TermsAndConditions_ServiceProvider" FromRole="ServiceProvider" ToRole="ServiceProvider_TermsAndConditions" />
+          <NavigationProperty Name="AspNetUser" Relationship="JobMeModel.FK_ServiceProvider_AspNetUsers" FromRole="ServiceProvider" ToRole="AspNetUser" />
         </EntityType>
         <EntityType Name="ServiceProvider_Accreditation">
           <Key>
@@ -766,6 +850,7 @@ warning 6002: The table/view 'JobMe.dbo.AvailableServices' does not have a prima
           <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="ServiceProvider" Relationship="Self.FK_ServiceProvider_Location_ServiceProvider" FromRole="ServiceProvider_Location" ToRole="ServiceProvider" />
           <NavigationProperty Name="ServiceRequests" Relationship="Self.FK_ServiceRequest_ServiceProvider_Location" FromRole="ServiceProvider_Location" ToRole="ServiceRequest" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="ServiceProvider_Recommendation">
           <Key>
@@ -781,6 +866,7 @@ warning 6002: The table/view 'JobMe.dbo.AvailableServices' does not have a prima
           <Property Name="UpdatedBy" Type="String" MaxLength="450" FixedLength="false" Unicode="true" />
           <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="ServiceProvider" Relationship="Self.FK_ServiceProvider_Recommendation_ServiceProvider" FromRole="ServiceProvider_Recommendation" ToRole="ServiceProvider" />
+          <NavigationProperty Name="AspNetUser" Relationship="JobMeModel.FK_ServiceProvider_Recommendation_AspNetUsers" FromRole="ServiceProvider_Recommendation" ToRole="AspNetUser" />
         </EntityType>
         <EntityType Name="ServiceProvider_SubServiceType">
           <Key>
@@ -834,6 +920,7 @@ warning 6002: The table/view 'JobMe.dbo.AvailableServices' does not have a prima
           <NavigationProperty Name="ServiceRequest_Invoice" Relationship="Self.FK_ServiceRequest_Invoice_ServiceRequest" FromRole="ServiceRequest" ToRole="ServiceRequest_Invoice" />
           <NavigationProperty Name="ServiceRequest_Quote" Relationship="Self.FK_ServiceRequest_Quote_ServiceRequest" FromRole="ServiceRequest" ToRole="ServiceRequest_Quote" />
           <NavigationProperty Name="ServiceRequest_Rating" Relationship="Self.FK_ServiceRequest_Rating_ServiceRequest" FromRole="ServiceRequest" ToRole="ServiceRequest_Rating" />
+          <NavigationProperty Name="AspNetUser" Relationship="JobMeModel.FK_ServiceRequest_AspNetUsers" FromRole="ServiceRequest" ToRole="AspNetUser" />
         </EntityType>
         <EntityType Name="ServiceRequest_Invoice">
           <Key>
@@ -1332,6 +1419,19 @@ warning 6002: The table/view 'JobMe.dbo.AvailableServices' does not have a prima
             <End Role="SubServiceType" EntitySet="SubServiceTypes" />
           </AssociationSet>
           <EntitySet Name="Users" EntityType="JobMeModel.User" />
+          <EntitySet Name="AspNetUsers" EntityType="JobMeModel.AspNetUser" />
+          <AssociationSet Name="FK_ServiceProvider_AspNetUsers" Association="JobMeModel.FK_ServiceProvider_AspNetUsers">
+            <End Role="AspNetUser" EntitySet="AspNetUsers" />
+            <End Role="ServiceProvider" EntitySet="ServiceProviders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ServiceProvider_Recommendation_AspNetUsers" Association="JobMeModel.FK_ServiceProvider_Recommendation_AspNetUsers">
+            <End Role="AspNetUser" EntitySet="AspNetUsers" />
+            <End Role="ServiceProvider_Recommendation" EntitySet="ServiceProvider_Recommendation" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ServiceRequest_AspNetUsers" Association="JobMeModel.FK_ServiceRequest_AspNetUsers">
+            <End Role="AspNetUser" EntitySet="AspNetUsers" />
+            <End Role="ServiceRequest" EntitySet="ServiceRequests" />
+          </AssociationSet>
           <EntitySet Name="AvailableServices" EntityType="JobMeModel.AvailableService" />
         </EntityContainer>
         <EntityType Name="User">
@@ -1343,10 +1443,79 @@ warning 6002: The table/view 'JobMe.dbo.AvailableServices' does not have a prima
           <Property Name="Password" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Active" Type="Boolean" Nullable="false" />
           <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="false" />
         </EntityType>
+        <EntityType Name="AspNetUser">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="450" FixedLength="false" Unicode="true" />
+          <Property Name="UserName" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="NormalizedUserName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="NormalizedEmail" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="EmailConfirmed" Type="Boolean" Nullable="false" />
+          <Property Name="PasswordHash" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="SecurityStamp" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ConcurrencyStamp" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneNumberConfirmed" Type="Boolean" Nullable="false" />
+          <Property Name="TwoFactorEnabled" Type="Boolean" Nullable="false" />
+          <Property Name="LockoutEnd" Type="DateTimeOffset" Precision="7" />
+          <Property Name="LockoutEnabled" Type="Boolean" Nullable="false" />
+          <Property Name="AccessFailedCount" Type="Int32" Nullable="false" />
+          <Property Name="FirstName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="Surname" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="Dob" Type="DateTime" Precision="0" />
+          <Property Name="ProfilePicURL" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="LastLogin" Type="DateTime" Precision="3" />
+          <Property Name="Address1" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Address2" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="City" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Province" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="ServiceProviders" Relationship="JobMeModel.FK_ServiceProvider_AspNetUsers" FromRole="AspNetUser" ToRole="ServiceProvider" />
+          <NavigationProperty Name="ServiceProvider_Recommendation" Relationship="JobMeModel.FK_ServiceProvider_Recommendation_AspNetUsers" FromRole="AspNetUser" ToRole="ServiceProvider_Recommendation" />
+          <NavigationProperty Name="ServiceRequests" Relationship="JobMeModel.FK_ServiceRequest_AspNetUsers" FromRole="AspNetUser" ToRole="ServiceRequest" />
+        </EntityType>
+        <Association Name="FK_ServiceProvider_AspNetUsers">
+          <End Type="JobMeModel.AspNetUser" Role="AspNetUser" Multiplicity="1" />
+          <End Type="JobMeModel.ServiceProvider" Role="ServiceProvider" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUser">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ServiceProvider">
+              <PropertyRef Name="AspNetUserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ServiceProvider_Recommendation_AspNetUsers">
+          <End Type="JobMeModel.AspNetUser" Role="AspNetUser" Multiplicity="1" />
+          <End Type="JobMeModel.ServiceProvider_Recommendation" Role="ServiceProvider_Recommendation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUser">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ServiceProvider_Recommendation">
+              <PropertyRef Name="RecommenderAspNetUserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ServiceRequest_AspNetUsers">
+          <End Type="JobMeModel.AspNetUser" Role="AspNetUser" Multiplicity="1" />
+          <End Type="JobMeModel.ServiceRequest" Role="ServiceRequest" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUser">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ServiceRequest">
+              <PropertyRef Name="RequesterAspNetUserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityType Name="AvailableService">
           <Key>
-            <PropertyRef Name="ID" />
+            <PropertyRef Name="Id" />
             <PropertyRef Name="SubServiceType" />
             <PropertyRef Name="ServiceType" />
             <PropertyRef Name="ServiceProviderId" />
@@ -1356,8 +1525,9 @@ warning 6002: The table/view 'JobMe.dbo.AvailableServices' does not have a prima
             <PropertyRef Name="Rank" />
             <PropertyRef Name="Latitude" />
             <PropertyRef Name="Longitude" />
+            <PropertyRef Name="ServiceProvider_LocationID" />
           </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="Id" Type="Int32" Nullable="false" />
           <Property Name="SubServiceType" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="ServiceType" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="ServiceProviderId" Type="Int32" Nullable="false" />
@@ -1369,6 +1539,7 @@ warning 6002: The table/view 'JobMe.dbo.AvailableServices' does not have a prima
           <Property Name="Latitude" Type="Decimal" Nullable="false" Precision="9" Scale="6" />
           <Property Name="Longitude" Type="Decimal" Nullable="false" Precision="9" Scale="6" />
           <Property Name="CalloutFee" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="ServiceProvider_LocationID" Type="Int32" Nullable="false" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -1440,6 +1611,7 @@ warning 6002: The table/view 'JobMe.dbo.AvailableServices' does not have a prima
           <EntitySetMapping Name="ServiceProvider_Location">
             <EntityTypeMapping TypeName="JobMeModel.ServiceProvider_Location">
               <MappingFragment StoreEntitySet="ServiceProvider_Location">
+                <ScalarProperty Name="Email" ColumnName="Email" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="ServiceProviderId" ColumnName="ServiceProviderId" />
                 <ScalarProperty Name="ContactNo" ColumnName="ContactNo" />
@@ -1687,6 +1859,7 @@ warning 6002: The table/view 'JobMe.dbo.AvailableServices' does not have a prima
           <EntitySetMapping Name="Users">
             <EntityTypeMapping TypeName="JobMeModel.User">
               <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="Email" ColumnName="Email" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Active" ColumnName="Active" />
                 <ScalarProperty Name="Password" ColumnName="Password" />
@@ -1695,9 +1868,40 @@ warning 6002: The table/view 'JobMe.dbo.AvailableServices' does not have a prima
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="AspNetUsers">
+            <EntityTypeMapping TypeName="JobMeModel.AspNetUser">
+              <MappingFragment StoreEntitySet="AspNetUsers">
+                <ScalarProperty Name="Province" ColumnName="Province" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="Address2" ColumnName="Address2" />
+                <ScalarProperty Name="Address1" ColumnName="Address1" />
+                <ScalarProperty Name="LastLogin" ColumnName="LastLogin" />
+                <ScalarProperty Name="ProfilePicURL" ColumnName="ProfilePicURL" />
+                <ScalarProperty Name="Dob" ColumnName="Dob" />
+                <ScalarProperty Name="Surname" ColumnName="Surname" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="AccessFailedCount" ColumnName="AccessFailedCount" />
+                <ScalarProperty Name="LockoutEnabled" ColumnName="LockoutEnabled" />
+                <ScalarProperty Name="LockoutEnd" ColumnName="LockoutEnd" />
+                <ScalarProperty Name="TwoFactorEnabled" ColumnName="TwoFactorEnabled" />
+                <ScalarProperty Name="PhoneNumberConfirmed" ColumnName="PhoneNumberConfirmed" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="ConcurrencyStamp" ColumnName="ConcurrencyStamp" />
+                <ScalarProperty Name="SecurityStamp" ColumnName="SecurityStamp" />
+                <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
+                <ScalarProperty Name="EmailConfirmed" ColumnName="EmailConfirmed" />
+                <ScalarProperty Name="NormalizedEmail" ColumnName="NormalizedEmail" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="NormalizedUserName" ColumnName="NormalizedUserName" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="AvailableServices">
             <EntityTypeMapping TypeName="JobMeModel.AvailableService">
               <MappingFragment StoreEntitySet="AvailableServices">
+                <ScalarProperty Name="ServiceProvider_LocationID" ColumnName="ServiceProvider_LocationID" />
                 <ScalarProperty Name="CalloutFee" ColumnName="CalloutFee" />
                 <ScalarProperty Name="Longitude" ColumnName="Longitude" />
                 <ScalarProperty Name="Latitude" ColumnName="Latitude" />
@@ -1709,7 +1913,7 @@ warning 6002: The table/view 'JobMe.dbo.AvailableServices' does not have a prima
                 <ScalarProperty Name="ServiceProviderId" ColumnName="ServiceProviderId" />
                 <ScalarProperty Name="ServiceType" ColumnName="ServiceType" />
                 <ScalarProperty Name="SubServiceType" ColumnName="SubServiceType" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

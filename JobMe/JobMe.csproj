@@ -46,6 +46,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AngleSharp, Version=0.14.0.0, Culture=neutral, PublicKeyToken=e83494dcdc6d31ea, processorArchitecture=MSIL">
+      <HintPath>..\packages\AngleSharp.0.14.0\lib\net472\AngleSharp.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
@@ -56,11 +59,24 @@
     <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="PayFast, Version=1.0.4.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\PayFast.1.0.4\lib\net462\PayFast.dll</HintPath>
+    </Reference>
+    <Reference Include="PreMailer.Net, Version=2.2.0.0, Culture=neutral, PublicKeyToken=23e3f43e29cae17f, processorArchitecture=MSIL">
+      <HintPath>..\packages\PreMailer.Net.2.2.0\lib\net461\PreMailer.Net.dll</HintPath>
+    </Reference>
     <Reference Include="System.Device" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.4.5.0\lib\netstandard2.0\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    </Reference>
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
     <Reference Include="System.ServiceModel" />
     <Reference Include="System.ServiceModel.Web" />
+    <Reference Include="System.Text.Encoding.CodePages, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Text.Encoding.CodePages.4.5.0\lib\net461\System.Text.Encoding.CodePages.dll</HintPath>
+    </Reference>
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -96,6 +112,7 @@
     <Content Include="assets\css\layout.css" />
     <Content Include="assets\css\layout.min.css" />
     <Content Include="assets\images\logo_light.png" />
+    <Content Include="assets\images\Service.png" />
     <Content Include="assets\images\willem_small.jpg" />
     <Content Include="assets\js\app.js" />
     <Content Include="assets\js\autoc.js" />
@@ -1367,15 +1384,22 @@
       <LastGenOutput>JobMeModel.cs</LastGenOutput>
     </Content>
     <Content Include="JobMeService.svc" />
+    <Content Include="js\CreateQuote.js" />
     <Content Include="js\FindService.js" />
     <Content Include="js\Login.js" />
+    <Content Include="js\RequestService.js" />
     <Content Include="js\site.js" />
     <Content Include="main.html" />
+    <Content Include="views\CreateQuote.html" />
     <Content Include="views\FindService.html" />
     <Content Include="views\Login.html" />
+    <Content Include="views\RequestService.html" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AspNetUser.cs">
+      <DependentUpon>JobMeModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="AvailableService.cs">
       <DependentUpon>JobMeModel.tt</DependentUpon>
     </Compile>
@@ -1402,6 +1426,11 @@
       <DependentUpon>JobMeService.svc</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
     <Compile Include="ServiceLookup.cs">
       <DependentUpon>JobMeModel.tt</DependentUpon>
     </Compile>
@@ -2185,6 +2214,10 @@
     <Content Include="css\open-iconic\ICON-LICENSE" />
     <Content Include="css\open-iconic\README.md" />
     <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

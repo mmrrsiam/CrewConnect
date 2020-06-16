@@ -14,7 +14,7 @@ namespace JobMe
     
     public partial class AvailableService
     {
-        public int ID { get; set; }
+        public int Id { get; set; }
         public string SubServiceType { get; set; }
         public string ServiceType { get; set; }
         public int ServiceProviderId { get; set; }
@@ -26,5 +26,6 @@ namespace JobMe
         public decimal Latitude { get; set; }
         public decimal Longitude { get; set; }
         public Nullable<decimal> CalloutFee { get; set; }
+        public int ServiceProvider_LocationID { get; set; }
     }
 }

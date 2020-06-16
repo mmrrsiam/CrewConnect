@@ -46,6 +46,7 @@ namespace JobMe
         public virtual DbSet<SouthAfricanCity> SouthAfricanCities { get; set; }
         public virtual DbSet<SubServiceType> SubServiceTypes { get; set; }
         public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<AspNetUser> AspNetUsers { get; set; }
         public virtual DbSet<AvailableService> AvailableServices { get; set; }
     }
 }

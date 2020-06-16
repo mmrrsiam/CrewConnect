@@ -19,5 +19,6 @@ namespace JobMe
         public string Password { get; set; }
         public bool Active { get; set; }
         public string Name { get; set; }
+        public string Email { get; set; }
     }
 }

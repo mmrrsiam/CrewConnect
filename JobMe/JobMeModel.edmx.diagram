@@ -45,6 +45,10 @@
         <AssociationConnector Association="JobMeModel.FK_ServiceRequest_Quote_Line_Item_ServiceRequest_Quote_Line" ManuallyRouted="false" />
         <AssociationConnector Association="JobMeModel.FK_SubServiceType_ServiceType" ManuallyRouted="false" />
         <EntityTypeShape EntityType="JobMeModel.User" Width="1.5" PointX="8.375" PointY="0.75" />
+        <EntityTypeShape EntityType="JobMeModel.AspNetUser" Width="1.5" PointX="0.75" PointY="17.25" />
+        <AssociationConnector Association="JobMeModel.FK_ServiceProvider_AspNetUsers" />
+        <AssociationConnector Association="JobMeModel.FK_ServiceProvider_Recommendation_AspNetUsers" />
+        <AssociationConnector Association="JobMeModel.FK_ServiceRequest_AspNetUsers" />
         <EntityTypeShape EntityType="JobMeModel.AvailableService" Width="1.5" PointX="8.375" PointY="3.75" />
       </Diagram>
     </edmx:Diagrams>

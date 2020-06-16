@@ -25,5 +25,6 @@ namespace JobMe
         public bool IsDeleted { get; set; }
     
         public virtual ServiceProvider ServiceProvider { get; set; }
+        public virtual AspNetUser AspNetUser { get; set; }
     }
 }
