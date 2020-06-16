@@ -1,0 +1,5 @@
+﻿.bootbox > div.modal-dialog > div.modal-content > div.modal-header {
+    background-color: #00bcd4 !important;
+    padding-bottom: 1rem;
+    color: #fff;
+}

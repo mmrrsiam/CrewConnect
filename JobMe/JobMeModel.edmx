@@ -1,0 +1,1739 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="JobMeModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="BatchNumber">
+          <Key>
+            <PropertyRef Name="Batch" />
+            <PropertyRef Name="UniqueKey" />
+          </Key>
+          <Property Name="Batch" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="UniqueKey" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ServiceLookup">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="ServiceProvider">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AspNetUserId" Type="nvarchar" MaxLength="450" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="LogoURL" Type="nvarchar" MaxLength="500" />
+          <Property Name="Ranking" Type="int" Nullable="false" />
+          <Property Name="DateCreated" Type="datetime" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="450" />
+          <Property Name="DateUpdated" Type="datetime" />
+          <Property Name="UpdatedBy" Type="nvarchar" MaxLength="450" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ServiceProvider_Accreditation">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ServiceProviderId" Type="int" Nullable="false" />
+          <Property Name="Url" Type="varchar" MaxLength="1000" Nullable="false" />
+          <Property Name="Description" Type="varchar" MaxLength="1000" Nullable="false" />
+          <Property Name="DateCreated" Type="datetime" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="450" />
+          <Property Name="DateUpdated" Type="datetime" />
+          <Property Name="UpdatedBy" Type="nvarchar" MaxLength="450" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ServiceProvider_Image">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ServiceProviderId" Type="int" Nullable="false" />
+          <Property Name="Url" Type="varchar" MaxLength="1000" Nullable="false" />
+          <Property Name="DateCreated" Type="datetime" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="450" />
+          <Property Name="DateUpdated" Type="datetime" />
+          <Property Name="UpdatedBy" Type="nvarchar" MaxLength="450" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ServiceProvider_Location">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ServiceProviderId" Type="int" Nullable="false" />
+          <Property Name="ContactNo" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="Address1" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Address2" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Suburb" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="City" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Province" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Longitude" Type="decimal" Precision="9" Scale="6" Nullable="false" />
+          <Property Name="Latitude" Type="decimal" Precision="9" Scale="6" Nullable="false" />
+          <Property Name="CalloutFee" Type="money" />
+          <Property Name="DateCreated" Type="datetime" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="450" />
+          <Property Name="DateUpdated" Type="datetime" />
+          <Property Name="UpdatedBy" Type="nvarchar" MaxLength="450" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ServiceProvider_Recommendation">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RecommenderAspNetUserId" Type="nvarchar" MaxLength="450" Nullable="false" />
+          <Property Name="ServiceProviderId" Type="int" Nullable="false" />
+          <Property Name="Recommendation" Type="varchar" MaxLength="1000" Nullable="false" />
+          <Property Name="DateCreated" Type="datetime" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="450" />
+          <Property Name="DateUpdated" Type="datetime" />
+          <Property Name="UpdatedBy" Type="nvarchar" MaxLength="450" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ServiceProvider_SubServiceType">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ServiceProviderId" Type="int" Nullable="false" />
+          <Property Name="SubServiceTypeId" Type="int" Nullable="false" />
+          <Property Name="DateCreated" Type="datetime" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="450" />
+          <Property Name="DateUpdated" Type="datetime" />
+          <Property Name="UpdatedBy" Type="nvarchar" MaxLength="450" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ServiceProvider_TermsAndConditions">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ServiceProviderId" Type="int" Nullable="false" />
+          <Property Name="Terms" Type="varchar" MaxLength="4000" Nullable="false" />
+          <Property Name="DateCreated" Type="datetime" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="450" />
+          <Property Name="DateUpdated" Type="datetime" />
+          <Property Name="UpdatedBy" Type="nvarchar" MaxLength="450" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ServiceRequest">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RequesterAspNetUserId" Type="nvarchar" MaxLength="450" Nullable="false" />
+          <Property Name="ServiceProviderLocationId" Type="int" Nullable="false" />
+          <Property Name="RequestFromDate" Type="datetime" Nullable="false" />
+          <Property Name="RequestToDate" Type="datetime" />
+          <Property Name="Details" Type="varchar" MaxLength="1000" Nullable="false" />
+          <Property Name="DateAccepted" Type="datetime" />
+          <Property Name="DateCompleted" Type="datetime" />
+          <Property Name="ActualCalloutFee" Type="money" />
+          <Property Name="TermsAcceptedDate" Type="datetime" />
+          <Property Name="DateCreated" Type="datetime" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="450" />
+          <Property Name="DateUpdated" Type="datetime" />
+          <Property Name="UpdatedBy" Type="nvarchar" MaxLength="450" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ServiceRequest_Invoice">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ServiceRequestId" Type="int" Nullable="false" />
+          <Property Name="InvoiceNo" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="DateOfInvoice" Type="datetime" Nullable="false" />
+          <Property Name="Subtotal" Type="money" Nullable="false" />
+          <Property Name="Total" Type="money" Nullable="false" />
+          <Property Name="Vat" Type="money" Nullable="false" />
+          <Property Name="Discount" Type="money" />
+          <Property Name="ServiceRequestQuoteId" Type="int" />
+          <Property Name="DateCreated" Type="datetime" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="450" />
+          <Property Name="DateUpdated" Type="datetime" />
+          <Property Name="UpdatedBy" Type="nvarchar" MaxLength="450" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ServiceRequest_Invoice_Line">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ServiceRequestInvoiceId" Type="int" Nullable="false" />
+          <Property Name="Description" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="PaymentGatewayRefNo" Type="varchar" MaxLength="100" />
+          <Property Name="DateOfPayment" Type="datetime" />
+          <Property Name="PaymentTotal" Type="money" />
+          <Property Name="ServiceRequestQuoteLineId" Type="int" />
+          <Property Name="DateCreated" Type="datetime" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="450" />
+          <Property Name="DateUpdated" Type="datetime" />
+          <Property Name="UpdatedBy" Type="nvarchar" MaxLength="450" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ServiceRequest_Invoice_Line_Item">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ServiceRequestLineId" Type="int" Nullable="false" />
+          <Property Name="Qty" Type="int" Nullable="false" />
+          <Property Name="Amount" Type="money" Nullable="false" />
+          <Property Name="Vat" Type="money" Nullable="false" />
+          <Property Name="ServiceRequestQuoteLineItemId" Type="int" />
+          <Property Name="DateCreated" Type="datetime" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="450" />
+          <Property Name="DateUpdated" Type="datetime" />
+          <Property Name="UpdatedBy" Type="nvarchar" MaxLength="450" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ServiceRequest_Quote">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ServiceRequestId" Type="int" Nullable="false" />
+          <Property Name="QuoteNo" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="DateOfQuote" Type="datetime" Nullable="false" />
+          <Property Name="Subtotal" Type="money" Nullable="false" />
+          <Property Name="Total" Type="money" Nullable="false" />
+          <Property Name="Vat" Type="money" Nullable="false" />
+          <Property Name="Discount" Type="money" />
+          <Property Name="DateCreated" Type="datetime" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="450" />
+          <Property Name="DateUpdated" Type="datetime" />
+          <Property Name="UpdatedBy" Type="nvarchar" MaxLength="450" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ServiceRequest_Quote_Line">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ServiceRequestQuoteId" Type="int" Nullable="false" />
+          <Property Name="Description" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="PaymentGatewayRefNo" Type="varchar" MaxLength="100" />
+          <Property Name="DateOfPayment" Type="datetime" />
+          <Property Name="PaymentTotal" Type="money" />
+          <Property Name="DateCreated" Type="datetime" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="450" />
+          <Property Name="DateUpdated" Type="datetime" />
+          <Property Name="UpdatedBy" Type="nvarchar" MaxLength="450" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ServiceRequest_Quote_Line_Item">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ServiceRequestLineId" Type="int" Nullable="false" />
+          <Property Name="Qty" Type="int" Nullable="false" />
+          <Property Name="Amount" Type="money" Nullable="false" />
+          <Property Name="Vat" Type="money" Nullable="false" />
+          <Property Name="DateCreated" Type="datetime" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="450" />
+          <Property Name="DateUpdated" Type="datetime" />
+          <Property Name="UpdatedBy" Type="nvarchar" MaxLength="450" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ServiceRequest_Rating">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="ServiceRequestId" Type="int" Nullable="false" />
+          <Property Name="Rating" Type="int" Nullable="false" />
+          <Property Name="DateCreated" Type="datetime" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="450" />
+          <Property Name="DateUpdated" Type="datetime" />
+          <Property Name="UpdatedBy" Type="nvarchar" MaxLength="450" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ServiceType">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="DateCreated" Type="datetime" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="450" />
+          <Property Name="DateUpdated" Type="datetime" />
+          <Property Name="UpdatedBy" Type="nvarchar" MaxLength="450" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SouthAfricanCities">
+          <Key>
+            <PropertyRef Name="CityId" />
+          </Key>
+          <Property Name="CityId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="City" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="AccentCity" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="ProvinceName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Latitude" Type="float" Nullable="false" />
+          <Property Name="Longitude" Type="float" Nullable="false" />
+          <Property Name="ProvinceID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SubServiceType">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ServiceTypeId" Type="int" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="DateCreated" Type="datetime" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="450" />
+          <Property Name="DateUpdated" Type="datetime" />
+          <Property Name="UpdatedBy" Type="nvarchar" MaxLength="450" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="UserID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Username" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Password" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Active" Type="bit" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'JobMe.dbo.AvailableServices' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="AvailableServices">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="SubServiceType" />
+            <PropertyRef Name="ServiceType" />
+            <PropertyRef Name="ServiceProviderId" />
+            <PropertyRef Name="SubServiceTypeId" />
+            <PropertyRef Name="ServiceTypeID" />
+            <PropertyRef Name="ServiceProviderName" />
+            <PropertyRef Name="Rank" />
+            <PropertyRef Name="Latitude" />
+            <PropertyRef Name="Longitude" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="SubServiceType" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="ServiceType" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="ServiceProviderId" Type="int" Nullable="false" />
+          <Property Name="SubServiceTypeId" Type="int" Nullable="false" />
+          <Property Name="ServiceTypeID" Type="int" Nullable="false" />
+          <Property Name="ServiceProviderName" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Logo" Type="nvarchar" MaxLength="500" />
+          <Property Name="Rank" Type="int" Nullable="false" />
+          <Property Name="Latitude" Type="decimal" Precision="9" Scale="6" Nullable="false" />
+          <Property Name="Longitude" Type="decimal" Precision="9" Scale="6" Nullable="false" />
+          <Property Name="CalloutFee" Type="money" />
+        </EntityType>
+        <Association Name="FK_ServiceProvider_Accreditation_ServiceProvider">
+          <End Role="ServiceProvider" Type="Self.ServiceProvider" Multiplicity="1" />
+          <End Role="ServiceProvider_Accreditation" Type="Self.ServiceProvider_Accreditation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ServiceProvider">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ServiceProvider_Accreditation">
+              <PropertyRef Name="ServiceProviderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ServiceProvider_Image_ServiceProvider">
+          <End Role="ServiceProvider" Type="Self.ServiceProvider" Multiplicity="1" />
+          <End Role="ServiceProvider_Image" Type="Self.ServiceProvider_Image" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ServiceProvider">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ServiceProvider_Image">
+              <PropertyRef Name="ServiceProviderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ServiceProvider_Location_ServiceProvider">
+          <End Role="ServiceProvider" Type="Self.ServiceProvider" Multiplicity="1" />
+          <End Role="ServiceProvider_Location" Type="Self.ServiceProvider_Location" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ServiceProvider">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ServiceProvider_Location">
+              <PropertyRef Name="ServiceProviderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ServiceProvider_Recommendation_ServiceProvider">
+          <End Role="ServiceProvider" Type="Self.ServiceProvider" Multiplicity="1" />
+          <End Role="ServiceProvider_Recommendation" Type="Self.ServiceProvider_Recommendation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ServiceProvider">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ServiceProvider_Recommendation">
+              <PropertyRef Name="ServiceProviderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ServiceProvider_SubServiceType_ServiceProvider">
+          <End Role="ServiceProvider" Type="Self.ServiceProvider" Multiplicity="1" />
+          <End Role="ServiceProvider_SubServiceType" Type="Self.ServiceProvider_SubServiceType" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ServiceProvider">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ServiceProvider_SubServiceType">
+              <PropertyRef Name="ServiceProviderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ServiceProvider_SubServiceType_SubServiceType">
+          <End Role="SubServiceType" Type="Self.SubServiceType" Multiplicity="1" />
+          <End Role="ServiceProvider_SubServiceType" Type="Self.ServiceProvider_SubServiceType" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SubServiceType">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ServiceProvider_SubServiceType">
+              <PropertyRef Name="SubServiceTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ServiceProvider_TermsAndConditions_ServiceProvider">
+          <End Role="ServiceProvider" Type="Self.ServiceProvider" Multiplicity="1" />
+          <End Role="ServiceProvider_TermsAndConditions" Type="Self.ServiceProvider_TermsAndConditions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ServiceProvider">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ServiceProvider_TermsAndConditions">
+              <PropertyRef Name="ServiceProviderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ServiceRequest_Invoice_Line_Item_ServiceRequest_Invoice_Line">
+          <End Role="ServiceRequest_Invoice_Line" Type="Self.ServiceRequest_Invoice_Line" Multiplicity="1" />
+          <End Role="ServiceRequest_Invoice_Line_Item" Type="Self.ServiceRequest_Invoice_Line_Item" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ServiceRequest_Invoice_Line">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ServiceRequest_Invoice_Line_Item">
+              <PropertyRef Name="ServiceRequestLineId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ServiceRequest_Invoice_Line_Item_ServiceRequest_Quote_Line_Item">
+          <End Role="ServiceRequest_Quote_Line_Item" Type="Self.ServiceRequest_Quote_Line_Item" Multiplicity="0..1" />
+          <End Role="ServiceRequest_Invoice_Line_Item" Type="Self.ServiceRequest_Invoice_Line_Item" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ServiceRequest_Quote_Line_Item">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ServiceRequest_Invoice_Line_Item">
+              <PropertyRef Name="ServiceRequestQuoteLineItemId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ServiceRequest_Invoice_Line_ServiceRequest_Invoice">
+          <End Role="ServiceRequest_Invoice" Type="Self.ServiceRequest_Invoice" Multiplicity="1" />
+          <End Role="ServiceRequest_Invoice_Line" Type="Self.ServiceRequest_Invoice_Line" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ServiceRequest_Invoice">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ServiceRequest_Invoice_Line">
+              <PropertyRef Name="ServiceRequestInvoiceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ServiceRequest_Invoice_Line_ServiceRequest_Quote_Line">
+          <End Role="ServiceRequest_Quote_Line" Type="Self.ServiceRequest_Quote_Line" Multiplicity="0..1" />
+          <End Role="ServiceRequest_Invoice_Line" Type="Self.ServiceRequest_Invoice_Line" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ServiceRequest_Quote_Line">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ServiceRequest_Invoice_Line">
+              <PropertyRef Name="ServiceRequestQuoteLineId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ServiceRequest_Invoice_ServiceRequest">
+          <End Role="ServiceRequest" Type="Self.ServiceRequest" Multiplicity="1" />
+          <End Role="ServiceRequest_Invoice" Type="Self.ServiceRequest_Invoice" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ServiceRequest">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ServiceRequest_Invoice">
+              <PropertyRef Name="ServiceRequestId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ServiceRequest_Invoice_ServiceRequest_Quote">
+          <End Role="ServiceRequest_Quote" Type="Self.ServiceRequest_Quote" Multiplicity="0..1" />
+          <End Role="ServiceRequest_Invoice" Type="Self.ServiceRequest_Invoice" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ServiceRequest_Quote">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ServiceRequest_Invoice">
+              <PropertyRef Name="ServiceRequestQuoteId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ServiceRequest_Quote_Line_Item_ServiceRequest_Quote_Line">
+          <End Role="ServiceRequest_Quote_Line" Type="Self.ServiceRequest_Quote_Line" Multiplicity="1" />
+          <End Role="ServiceRequest_Quote_Line_Item" Type="Self.ServiceRequest_Quote_Line_Item" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ServiceRequest_Quote_Line">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ServiceRequest_Quote_Line_Item">
+              <PropertyRef Name="ServiceRequestLineId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ServiceRequest_Quote_Line_ServiceRequest_Quote">
+          <End Role="ServiceRequest_Quote" Type="Self.ServiceRequest_Quote" Multiplicity="1" />
+          <End Role="ServiceRequest_Quote_Line" Type="Self.ServiceRequest_Quote_Line" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ServiceRequest_Quote">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ServiceRequest_Quote_Line">
+              <PropertyRef Name="ServiceRequestQuoteId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ServiceRequest_Quote_ServiceRequest">
+          <End Role="ServiceRequest" Type="Self.ServiceRequest" Multiplicity="1" />
+          <End Role="ServiceRequest_Quote" Type="Self.ServiceRequest_Quote" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ServiceRequest">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ServiceRequest_Quote">
+              <PropertyRef Name="ServiceRequestId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ServiceRequest_Rating_ServiceRequest">
+          <End Role="ServiceRequest" Type="Self.ServiceRequest" Multiplicity="1" />
+          <End Role="ServiceRequest_Rating" Type="Self.ServiceRequest_Rating" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ServiceRequest">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ServiceRequest_Rating">
+              <PropertyRef Name="ServiceRequestId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ServiceRequest_ServiceProvider_Location">
+          <End Role="ServiceProvider_Location" Type="Self.ServiceProvider_Location" Multiplicity="1" />
+          <End Role="ServiceRequest" Type="Self.ServiceRequest" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ServiceProvider_Location">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ServiceRequest">
+              <PropertyRef Name="ServiceProviderLocationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SubServiceType_ServiceType">
+          <End Role="ServiceType" Type="Self.ServiceType" Multiplicity="1" />
+          <End Role="SubServiceType" Type="Self.SubServiceType" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ServiceType">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="SubServiceType">
+              <PropertyRef Name="ServiceTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="JobMeModelStoreContainer">
+          <EntitySet Name="BatchNumber" EntityType="Self.BatchNumber" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ServiceLookup" EntityType="Self.ServiceLookup" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ServiceProvider" EntityType="Self.ServiceProvider" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ServiceProvider_Accreditation" EntityType="Self.ServiceProvider_Accreditation" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ServiceProvider_Image" EntityType="Self.ServiceProvider_Image" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ServiceProvider_Location" EntityType="Self.ServiceProvider_Location" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ServiceProvider_Recommendation" EntityType="Self.ServiceProvider_Recommendation" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ServiceProvider_SubServiceType" EntityType="Self.ServiceProvider_SubServiceType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ServiceProvider_TermsAndConditions" EntityType="Self.ServiceProvider_TermsAndConditions" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ServiceRequest" EntityType="Self.ServiceRequest" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ServiceRequest_Invoice" EntityType="Self.ServiceRequest_Invoice" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ServiceRequest_Invoice_Line" EntityType="Self.ServiceRequest_Invoice_Line" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ServiceRequest_Invoice_Line_Item" EntityType="Self.ServiceRequest_Invoice_Line_Item" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ServiceRequest_Quote" EntityType="Self.ServiceRequest_Quote" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ServiceRequest_Quote_Line" EntityType="Self.ServiceRequest_Quote_Line" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ServiceRequest_Quote_Line_Item" EntityType="Self.ServiceRequest_Quote_Line_Item" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ServiceRequest_Rating" EntityType="Self.ServiceRequest_Rating" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ServiceType" EntityType="Self.ServiceType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SouthAfricanCities" EntityType="Self.SouthAfricanCities" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SubServiceType" EntityType="Self.SubServiceType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AvailableServices" EntityType="Self.AvailableServices" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [AvailableServices].[ID] AS [ID], 
+    [AvailableServices].[SubServiceType] AS [SubServiceType], 
+    [AvailableServices].[ServiceType] AS [ServiceType], 
+    [AvailableServices].[ServiceProviderId] AS [ServiceProviderId], 
+    [AvailableServices].[SubServiceTypeId] AS [SubServiceTypeId], 
+    [AvailableServices].[ServiceTypeID] AS [ServiceTypeID], 
+    [AvailableServices].[ServiceProviderName] AS [ServiceProviderName], 
+    [AvailableServices].[Logo] AS [Logo], 
+    [AvailableServices].[Rank] AS [Rank], 
+    [AvailableServices].[Latitude] AS [Latitude], 
+    [AvailableServices].[Longitude] AS [Longitude], 
+    [AvailableServices].[CalloutFee] AS [CalloutFee]
+    FROM [dbo].[AvailableServices] AS [AvailableServices]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK_ServiceProvider_Accreditation_ServiceProvider" Association="Self.FK_ServiceProvider_Accreditation_ServiceProvider">
+            <End Role="ServiceProvider" EntitySet="ServiceProvider" />
+            <End Role="ServiceProvider_Accreditation" EntitySet="ServiceProvider_Accreditation" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ServiceProvider_Image_ServiceProvider" Association="Self.FK_ServiceProvider_Image_ServiceProvider">
+            <End Role="ServiceProvider" EntitySet="ServiceProvider" />
+            <End Role="ServiceProvider_Image" EntitySet="ServiceProvider_Image" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ServiceProvider_Location_ServiceProvider" Association="Self.FK_ServiceProvider_Location_ServiceProvider">
+            <End Role="ServiceProvider" EntitySet="ServiceProvider" />
+            <End Role="ServiceProvider_Location" EntitySet="ServiceProvider_Location" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ServiceProvider_Recommendation_ServiceProvider" Association="Self.FK_ServiceProvider_Recommendation_ServiceProvider">
+            <End Role="ServiceProvider" EntitySet="ServiceProvider" />
+            <End Role="ServiceProvider_Recommendation" EntitySet="ServiceProvider_Recommendation" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ServiceProvider_SubServiceType_ServiceProvider" Association="Self.FK_ServiceProvider_SubServiceType_ServiceProvider">
+            <End Role="ServiceProvider" EntitySet="ServiceProvider" />
+            <End Role="ServiceProvider_SubServiceType" EntitySet="ServiceProvider_SubServiceType" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ServiceProvider_SubServiceType_SubServiceType" Association="Self.FK_ServiceProvider_SubServiceType_SubServiceType">
+            <End Role="SubServiceType" EntitySet="SubServiceType" />
+            <End Role="ServiceProvider_SubServiceType" EntitySet="ServiceProvider_SubServiceType" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ServiceProvider_TermsAndConditions_ServiceProvider" Association="Self.FK_ServiceProvider_TermsAndConditions_ServiceProvider">
+            <End Role="ServiceProvider" EntitySet="ServiceProvider" />
+            <End Role="ServiceProvider_TermsAndConditions" EntitySet="ServiceProvider_TermsAndConditions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ServiceRequest_Invoice_Line_Item_ServiceRequest_Invoice_Line" Association="Self.FK_ServiceRequest_Invoice_Line_Item_ServiceRequest_Invoice_Line">
+            <End Role="ServiceRequest_Invoice_Line" EntitySet="ServiceRequest_Invoice_Line" />
+            <End Role="ServiceRequest_Invoice_Line_Item" EntitySet="ServiceRequest_Invoice_Line_Item" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ServiceRequest_Invoice_Line_Item_ServiceRequest_Quote_Line_Item" Association="Self.FK_ServiceRequest_Invoice_Line_Item_ServiceRequest_Quote_Line_Item">
+            <End Role="ServiceRequest_Quote_Line_Item" EntitySet="ServiceRequest_Quote_Line_Item" />
+            <End Role="ServiceRequest_Invoice_Line_Item" EntitySet="ServiceRequest_Invoice_Line_Item" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ServiceRequest_Invoice_Line_ServiceRequest_Invoice" Association="Self.FK_ServiceRequest_Invoice_Line_ServiceRequest_Invoice">
+            <End Role="ServiceRequest_Invoice" EntitySet="ServiceRequest_Invoice" />
+            <End Role="ServiceRequest_Invoice_Line" EntitySet="ServiceRequest_Invoice_Line" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ServiceRequest_Invoice_Line_ServiceRequest_Quote_Line" Association="Self.FK_ServiceRequest_Invoice_Line_ServiceRequest_Quote_Line">
+            <End Role="ServiceRequest_Quote_Line" EntitySet="ServiceRequest_Quote_Line" />
+            <End Role="ServiceRequest_Invoice_Line" EntitySet="ServiceRequest_Invoice_Line" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ServiceRequest_Invoice_ServiceRequest" Association="Self.FK_ServiceRequest_Invoice_ServiceRequest">
+            <End Role="ServiceRequest" EntitySet="ServiceRequest" />
+            <End Role="ServiceRequest_Invoice" EntitySet="ServiceRequest_Invoice" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ServiceRequest_Invoice_ServiceRequest_Quote" Association="Self.FK_ServiceRequest_Invoice_ServiceRequest_Quote">
+            <End Role="ServiceRequest_Quote" EntitySet="ServiceRequest_Quote" />
+            <End Role="ServiceRequest_Invoice" EntitySet="ServiceRequest_Invoice" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ServiceRequest_Quote_Line_Item_ServiceRequest_Quote_Line" Association="Self.FK_ServiceRequest_Quote_Line_Item_ServiceRequest_Quote_Line">
+            <End Role="ServiceRequest_Quote_Line" EntitySet="ServiceRequest_Quote_Line" />
+            <End Role="ServiceRequest_Quote_Line_Item" EntitySet="ServiceRequest_Quote_Line_Item" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ServiceRequest_Quote_Line_ServiceRequest_Quote" Association="Self.FK_ServiceRequest_Quote_Line_ServiceRequest_Quote">
+            <End Role="ServiceRequest_Quote" EntitySet="ServiceRequest_Quote" />
+            <End Role="ServiceRequest_Quote_Line" EntitySet="ServiceRequest_Quote_Line" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ServiceRequest_Quote_ServiceRequest" Association="Self.FK_ServiceRequest_Quote_ServiceRequest">
+            <End Role="ServiceRequest" EntitySet="ServiceRequest" />
+            <End Role="ServiceRequest_Quote" EntitySet="ServiceRequest_Quote" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ServiceRequest_Rating_ServiceRequest" Association="Self.FK_ServiceRequest_Rating_ServiceRequest">
+            <End Role="ServiceRequest" EntitySet="ServiceRequest" />
+            <End Role="ServiceRequest_Rating" EntitySet="ServiceRequest_Rating" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ServiceRequest_ServiceProvider_Location" Association="Self.FK_ServiceRequest_ServiceProvider_Location">
+            <End Role="ServiceProvider_Location" EntitySet="ServiceProvider_Location" />
+            <End Role="ServiceRequest" EntitySet="ServiceRequest" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SubServiceType_ServiceType" Association="Self.FK_SubServiceType_ServiceType">
+            <End Role="ServiceType" EntitySet="ServiceType" />
+            <End Role="SubServiceType" EntitySet="SubServiceType" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="JobMeModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="BatchNumber">
+          <Key>
+            <PropertyRef Name="Batch" />
+            <PropertyRef Name="UniqueKey" />
+          </Key>
+          <Property Name="Batch" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="UniqueKey" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ServiceLookup">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="ServiceProvider">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AspNetUserId" Type="String" MaxLength="450" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="LogoURL" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Ranking" Type="Int32" Nullable="false" />
+          <Property Name="DateCreated" Type="DateTime" Precision="3" />
+          <Property Name="CreatedBy" Type="String" MaxLength="450" FixedLength="false" Unicode="true" />
+          <Property Name="DateUpdated" Type="DateTime" Precision="3" />
+          <Property Name="UpdatedBy" Type="String" MaxLength="450" FixedLength="false" Unicode="true" />
+          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="ServiceProvider_Accreditation" Relationship="Self.FK_ServiceProvider_Accreditation_ServiceProvider" FromRole="ServiceProvider" ToRole="ServiceProvider_Accreditation" />
+          <NavigationProperty Name="ServiceProvider_Image" Relationship="Self.FK_ServiceProvider_Image_ServiceProvider" FromRole="ServiceProvider" ToRole="ServiceProvider_Image" />
+          <NavigationProperty Name="ServiceProvider_Location" Relationship="Self.FK_ServiceProvider_Location_ServiceProvider" FromRole="ServiceProvider" ToRole="ServiceProvider_Location" />
+          <NavigationProperty Name="ServiceProvider_Recommendation" Relationship="Self.FK_ServiceProvider_Recommendation_ServiceProvider" FromRole="ServiceProvider" ToRole="ServiceProvider_Recommendation" />
+          <NavigationProperty Name="ServiceProvider_SubServiceType" Relationship="Self.FK_ServiceProvider_SubServiceType_ServiceProvider" FromRole="ServiceProvider" ToRole="ServiceProvider_SubServiceType" />
+          <NavigationProperty Name="ServiceProvider_TermsAndConditions" Relationship="Self.FK_ServiceProvider_TermsAndConditions_ServiceProvider" FromRole="ServiceProvider" ToRole="ServiceProvider_TermsAndConditions" />
+        </EntityType>
+        <EntityType Name="ServiceProvider_Accreditation">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ServiceProviderId" Type="Int32" Nullable="false" />
+          <Property Name="Url" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="DateCreated" Type="DateTime" Precision="3" />
+          <Property Name="CreatedBy" Type="String" MaxLength="450" FixedLength="false" Unicode="true" />
+          <Property Name="DateUpdated" Type="DateTime" Precision="3" />
+          <Property Name="UpdatedBy" Type="String" MaxLength="450" FixedLength="false" Unicode="true" />
+          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="ServiceProvider" Relationship="Self.FK_ServiceProvider_Accreditation_ServiceProvider" FromRole="ServiceProvider_Accreditation" ToRole="ServiceProvider" />
+        </EntityType>
+        <EntityType Name="ServiceProvider_Image">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ServiceProviderId" Type="Int32" Nullable="false" />
+          <Property Name="Url" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="DateCreated" Type="DateTime" Precision="3" />
+          <Property Name="CreatedBy" Type="String" MaxLength="450" FixedLength="false" Unicode="true" />
+          <Property Name="DateUpdated" Type="DateTime" Precision="3" />
+          <Property Name="UpdatedBy" Type="String" MaxLength="450" FixedLength="false" Unicode="true" />
+          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="ServiceProvider" Relationship="Self.FK_ServiceProvider_Image_ServiceProvider" FromRole="ServiceProvider_Image" ToRole="ServiceProvider" />
+        </EntityType>
+        <EntityType Name="ServiceProvider_Location">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ServiceProviderId" Type="Int32" Nullable="false" />
+          <Property Name="ContactNo" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Address1" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Address2" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Suburb" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="City" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Province" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Longitude" Type="Decimal" Precision="9" Scale="6" Nullable="false" />
+          <Property Name="Latitude" Type="Decimal" Precision="9" Scale="6" Nullable="false" />
+          <Property Name="CalloutFee" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="DateCreated" Type="DateTime" Precision="3" />
+          <Property Name="CreatedBy" Type="String" MaxLength="450" FixedLength="false" Unicode="true" />
+          <Property Name="DateUpdated" Type="DateTime" Precision="3" />
+          <Property Name="UpdatedBy" Type="String" MaxLength="450" FixedLength="false" Unicode="true" />
+          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="ServiceProvider" Relationship="Self.FK_ServiceProvider_Location_ServiceProvider" FromRole="ServiceProvider_Location" ToRole="ServiceProvider" />
+          <NavigationProperty Name="ServiceRequests" Relationship="Self.FK_ServiceRequest_ServiceProvider_Location" FromRole="ServiceProvider_Location" ToRole="ServiceRequest" />
+        </EntityType>
+        <EntityType Name="ServiceProvider_Recommendation">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RecommenderAspNetUserId" Type="String" MaxLength="450" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ServiceProviderId" Type="Int32" Nullable="false" />
+          <Property Name="Recommendation" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="DateCreated" Type="DateTime" Precision="3" />
+          <Property Name="CreatedBy" Type="String" MaxLength="450" FixedLength="false" Unicode="true" />
+          <Property Name="DateUpdated" Type="DateTime" Precision="3" />
+          <Property Name="UpdatedBy" Type="String" MaxLength="450" FixedLength="false" Unicode="true" />
+          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="ServiceProvider" Relationship="Self.FK_ServiceProvider_Recommendation_ServiceProvider" FromRole="ServiceProvider_Recommendation" ToRole="ServiceProvider" />
+        </EntityType>
+        <EntityType Name="ServiceProvider_SubServiceType">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ServiceProviderId" Type="Int32" Nullable="false" />
+          <Property Name="SubServiceTypeId" Type="Int32" Nullable="false" />
+          <Property Name="DateCreated" Type="DateTime" Precision="3" />
+          <Property Name="CreatedBy" Type="String" MaxLength="450" FixedLength="false" Unicode="true" />
+          <Property Name="DateUpdated" Type="DateTime" Precision="3" />
+          <Property Name="UpdatedBy" Type="String" MaxLength="450" FixedLength="false" Unicode="true" />
+          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="ServiceProvider" Relationship="Self.FK_ServiceProvider_SubServiceType_ServiceProvider" FromRole="ServiceProvider_SubServiceType" ToRole="ServiceProvider" />
+          <NavigationProperty Name="SubServiceType" Relationship="Self.FK_ServiceProvider_SubServiceType_SubServiceType" FromRole="ServiceProvider_SubServiceType" ToRole="SubServiceType" />
+        </EntityType>
+        <EntityType Name="ServiceProvider_TermsAndConditions">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ServiceProviderId" Type="Int32" Nullable="false" />
+          <Property Name="Terms" Type="String" MaxLength="4000" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="DateCreated" Type="DateTime" Precision="3" />
+          <Property Name="CreatedBy" Type="String" MaxLength="450" FixedLength="false" Unicode="true" />
+          <Property Name="DateUpdated" Type="DateTime" Precision="3" />
+          <Property Name="UpdatedBy" Type="String" MaxLength="450" FixedLength="false" Unicode="true" />
+          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="ServiceProvider" Relationship="Self.FK_ServiceProvider_TermsAndConditions_ServiceProvider" FromRole="ServiceProvider_TermsAndConditions" ToRole="ServiceProvider" />
+        </EntityType>
+        <EntityType Name="ServiceRequest">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RequesterAspNetUserId" Type="String" MaxLength="450" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ServiceProviderLocationId" Type="Int32" Nullable="false" />
+          <Property Name="RequestFromDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="RequestToDate" Type="DateTime" Precision="3" />
+          <Property Name="Details" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="DateAccepted" Type="DateTime" Precision="3" />
+          <Property Name="DateCompleted" Type="DateTime" Precision="3" />
+          <Property Name="ActualCalloutFee" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="TermsAcceptedDate" Type="DateTime" Precision="3" />
+          <Property Name="DateCreated" Type="DateTime" Precision="3" />
+          <Property Name="CreatedBy" Type="String" MaxLength="450" FixedLength="false" Unicode="true" />
+          <Property Name="DateUpdated" Type="DateTime" Precision="3" />
+          <Property Name="UpdatedBy" Type="String" MaxLength="450" FixedLength="false" Unicode="true" />
+          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="ServiceProvider_Location" Relationship="Self.FK_ServiceRequest_ServiceProvider_Location" FromRole="ServiceRequest" ToRole="ServiceProvider_Location" />
+          <NavigationProperty Name="ServiceRequest_Invoice" Relationship="Self.FK_ServiceRequest_Invoice_ServiceRequest" FromRole="ServiceRequest" ToRole="ServiceRequest_Invoice" />
+          <NavigationProperty Name="ServiceRequest_Quote" Relationship="Self.FK_ServiceRequest_Quote_ServiceRequest" FromRole="ServiceRequest" ToRole="ServiceRequest_Quote" />
+          <NavigationProperty Name="ServiceRequest_Rating" Relationship="Self.FK_ServiceRequest_Rating_ServiceRequest" FromRole="ServiceRequest" ToRole="ServiceRequest_Rating" />
+        </EntityType>
+        <EntityType Name="ServiceRequest_Invoice">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ServiceRequestId" Type="Int32" Nullable="false" />
+          <Property Name="InvoiceNo" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="DateOfInvoice" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Subtotal" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="Total" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="Vat" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="Discount" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="ServiceRequestQuoteId" Type="Int32" />
+          <Property Name="DateCreated" Type="DateTime" Precision="3" />
+          <Property Name="CreatedBy" Type="String" MaxLength="450" FixedLength="false" Unicode="true" />
+          <Property Name="DateUpdated" Type="DateTime" Precision="3" />
+          <Property Name="UpdatedBy" Type="String" MaxLength="450" FixedLength="false" Unicode="true" />
+          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="ServiceRequest" Relationship="Self.FK_ServiceRequest_Invoice_ServiceRequest" FromRole="ServiceRequest_Invoice" ToRole="ServiceRequest" />
+          <NavigationProperty Name="ServiceRequest_Invoice_Line" Relationship="Self.FK_ServiceRequest_Invoice_Line_ServiceRequest_Invoice" FromRole="ServiceRequest_Invoice" ToRole="ServiceRequest_Invoice_Line" />
+          <NavigationProperty Name="ServiceRequest_Quote" Relationship="Self.FK_ServiceRequest_Invoice_ServiceRequest_Quote" FromRole="ServiceRequest_Invoice" ToRole="ServiceRequest_Quote" />
+        </EntityType>
+        <EntityType Name="ServiceRequest_Invoice_Line">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ServiceRequestInvoiceId" Type="Int32" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="PaymentGatewayRefNo" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="DateOfPayment" Type="DateTime" Precision="3" />
+          <Property Name="PaymentTotal" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="ServiceRequestQuoteLineId" Type="Int32" />
+          <Property Name="DateCreated" Type="DateTime" Precision="3" />
+          <Property Name="CreatedBy" Type="String" MaxLength="450" FixedLength="false" Unicode="true" />
+          <Property Name="DateUpdated" Type="DateTime" Precision="3" />
+          <Property Name="UpdatedBy" Type="String" MaxLength="450" FixedLength="false" Unicode="true" />
+          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="ServiceRequest_Invoice" Relationship="Self.FK_ServiceRequest_Invoice_Line_ServiceRequest_Invoice" FromRole="ServiceRequest_Invoice_Line" ToRole="ServiceRequest_Invoice" />
+          <NavigationProperty Name="ServiceRequest_Invoice_Line_Item" Relationship="Self.FK_ServiceRequest_Invoice_Line_Item_ServiceRequest_Invoice_Line" FromRole="ServiceRequest_Invoice_Line" ToRole="ServiceRequest_Invoice_Line_Item" />
+          <NavigationProperty Name="ServiceRequest_Quote_Line" Relationship="Self.FK_ServiceRequest_Invoice_Line_ServiceRequest_Quote_Line" FromRole="ServiceRequest_Invoice_Line" ToRole="ServiceRequest_Quote_Line" />
+        </EntityType>
+        <EntityType Name="ServiceRequest_Invoice_Line_Item">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ServiceRequestLineId" Type="Int32" Nullable="false" />
+          <Property Name="Qty" Type="Int32" Nullable="false" />
+          <Property Name="Amount" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="Vat" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="ServiceRequestQuoteLineItemId" Type="Int32" />
+          <Property Name="DateCreated" Type="DateTime" Precision="3" />
+          <Property Name="CreatedBy" Type="String" MaxLength="450" FixedLength="false" Unicode="true" />
+          <Property Name="DateUpdated" Type="DateTime" Precision="3" />
+          <Property Name="UpdatedBy" Type="String" MaxLength="450" FixedLength="false" Unicode="true" />
+          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="ServiceRequest_Invoice_Line" Relationship="Self.FK_ServiceRequest_Invoice_Line_Item_ServiceRequest_Invoice_Line" FromRole="ServiceRequest_Invoice_Line_Item" ToRole="ServiceRequest_Invoice_Line" />
+          <NavigationProperty Name="ServiceRequest_Quote_Line_Item" Relationship="Self.FK_ServiceRequest_Invoice_Line_Item_ServiceRequest_Quote_Line_Item" FromRole="ServiceRequest_Invoice_Line_Item" ToRole="ServiceRequest_Quote_Line_Item" />
+        </EntityType>
+        <EntityType Name="ServiceRequest_Quote">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ServiceRequestId" Type="Int32" Nullable="false" />
+          <Property Name="QuoteNo" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="DateOfQuote" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Subtotal" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="Total" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="Vat" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="Discount" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="DateCreated" Type="DateTime" Precision="3" />
+          <Property Name="CreatedBy" Type="String" MaxLength="450" FixedLength="false" Unicode="true" />
+          <Property Name="DateUpdated" Type="DateTime" Precision="3" />
+          <Property Name="UpdatedBy" Type="String" MaxLength="450" FixedLength="false" Unicode="true" />
+          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="ServiceRequest" Relationship="Self.FK_ServiceRequest_Quote_ServiceRequest" FromRole="ServiceRequest_Quote" ToRole="ServiceRequest" />
+          <NavigationProperty Name="ServiceRequest_Invoice" Relationship="Self.FK_ServiceRequest_Invoice_ServiceRequest_Quote" FromRole="ServiceRequest_Quote" ToRole="ServiceRequest_Invoice" />
+          <NavigationProperty Name="ServiceRequest_Quote_Line" Relationship="Self.FK_ServiceRequest_Quote_Line_ServiceRequest_Quote" FromRole="ServiceRequest_Quote" ToRole="ServiceRequest_Quote_Line" />
+        </EntityType>
+        <EntityType Name="ServiceRequest_Quote_Line">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ServiceRequestQuoteId" Type="Int32" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="PaymentGatewayRefNo" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="DateOfPayment" Type="DateTime" Precision="3" />
+          <Property Name="PaymentTotal" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="DateCreated" Type="DateTime" Precision="3" />
+          <Property Name="CreatedBy" Type="String" MaxLength="450" FixedLength="false" Unicode="true" />
+          <Property Name="DateUpdated" Type="DateTime" Precision="3" />
+          <Property Name="UpdatedBy" Type="String" MaxLength="450" FixedLength="false" Unicode="true" />
+          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="ServiceRequest_Invoice_Line" Relationship="Self.FK_ServiceRequest_Invoice_Line_ServiceRequest_Quote_Line" FromRole="ServiceRequest_Quote_Line" ToRole="ServiceRequest_Invoice_Line" />
+          <NavigationProperty Name="ServiceRequest_Quote" Relationship="Self.FK_ServiceRequest_Quote_Line_ServiceRequest_Quote" FromRole="ServiceRequest_Quote_Line" ToRole="ServiceRequest_Quote" />
+          <NavigationProperty Name="ServiceRequest_Quote_Line_Item" Relationship="Self.FK_ServiceRequest_Quote_Line_Item_ServiceRequest_Quote_Line" FromRole="ServiceRequest_Quote_Line" ToRole="ServiceRequest_Quote_Line_Item" />
+        </EntityType>
+        <EntityType Name="ServiceRequest_Quote_Line_Item">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ServiceRequestLineId" Type="Int32" Nullable="false" />
+          <Property Name="Qty" Type="Int32" Nullable="false" />
+          <Property Name="Amount" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="Vat" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="DateCreated" Type="DateTime" Precision="3" />
+          <Property Name="CreatedBy" Type="String" MaxLength="450" FixedLength="false" Unicode="true" />
+          <Property Name="DateUpdated" Type="DateTime" Precision="3" />
+          <Property Name="UpdatedBy" Type="String" MaxLength="450" FixedLength="false" Unicode="true" />
+          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="ServiceRequest_Invoice_Line_Item" Relationship="Self.FK_ServiceRequest_Invoice_Line_Item_ServiceRequest_Quote_Line_Item" FromRole="ServiceRequest_Quote_Line_Item" ToRole="ServiceRequest_Invoice_Line_Item" />
+          <NavigationProperty Name="ServiceRequest_Quote_Line" Relationship="Self.FK_ServiceRequest_Quote_Line_Item_ServiceRequest_Quote_Line" FromRole="ServiceRequest_Quote_Line_Item" ToRole="ServiceRequest_Quote_Line" />
+        </EntityType>
+        <EntityType Name="ServiceRequest_Rating">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="ServiceRequestId" Type="Int32" Nullable="false" />
+          <Property Name="Rating" Type="Int32" Nullable="false" />
+          <Property Name="DateCreated" Type="DateTime" Precision="3" />
+          <Property Name="CreatedBy" Type="String" MaxLength="450" FixedLength="false" Unicode="true" />
+          <Property Name="DateUpdated" Type="DateTime" Precision="3" />
+          <Property Name="UpdatedBy" Type="String" MaxLength="450" FixedLength="false" Unicode="true" />
+          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="ServiceRequest" Relationship="Self.FK_ServiceRequest_Rating_ServiceRequest" FromRole="ServiceRequest_Rating" ToRole="ServiceRequest" />
+        </EntityType>
+        <EntityType Name="ServiceType">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="DateCreated" Type="DateTime" Precision="3" />
+          <Property Name="CreatedBy" Type="String" MaxLength="450" FixedLength="false" Unicode="true" />
+          <Property Name="DateUpdated" Type="DateTime" Precision="3" />
+          <Property Name="UpdatedBy" Type="String" MaxLength="450" FixedLength="false" Unicode="true" />
+          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="SubServiceTypes" Relationship="Self.FK_SubServiceType_ServiceType" FromRole="ServiceType" ToRole="SubServiceType" />
+        </EntityType>
+        <EntityType Name="SouthAfricanCity">
+          <Key>
+            <PropertyRef Name="CityId" />
+          </Key>
+          <Property Name="CityId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="City" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="AccentCity" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ProvinceName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Latitude" Type="Double" Nullable="false" />
+          <Property Name="Longitude" Type="Double" Nullable="false" />
+          <Property Name="ProvinceID" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SubServiceType">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ServiceTypeId" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="DateCreated" Type="DateTime" Precision="3" />
+          <Property Name="CreatedBy" Type="String" MaxLength="450" FixedLength="false" Unicode="true" />
+          <Property Name="DateUpdated" Type="DateTime" Precision="3" />
+          <Property Name="UpdatedBy" Type="String" MaxLength="450" FixedLength="false" Unicode="true" />
+          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="ServiceProvider_SubServiceType" Relationship="Self.FK_ServiceProvider_SubServiceType_SubServiceType" FromRole="SubServiceType" ToRole="ServiceProvider_SubServiceType" />
+          <NavigationProperty Name="ServiceType" Relationship="Self.FK_SubServiceType_ServiceType" FromRole="SubServiceType" ToRole="ServiceType" />
+        </EntityType>
+        <Association Name="FK_ServiceProvider_Accreditation_ServiceProvider">
+          <End Role="ServiceProvider" Type="Self.ServiceProvider" Multiplicity="1" />
+          <End Role="ServiceProvider_Accreditation" Type="Self.ServiceProvider_Accreditation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ServiceProvider">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ServiceProvider_Accreditation">
+              <PropertyRef Name="ServiceProviderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ServiceProvider_Image_ServiceProvider">
+          <End Role="ServiceProvider" Type="Self.ServiceProvider" Multiplicity="1" />
+          <End Role="ServiceProvider_Image" Type="Self.ServiceProvider_Image" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ServiceProvider">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ServiceProvider_Image">
+              <PropertyRef Name="ServiceProviderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ServiceProvider_Location_ServiceProvider">
+          <End Role="ServiceProvider" Type="Self.ServiceProvider" Multiplicity="1" />
+          <End Role="ServiceProvider_Location" Type="Self.ServiceProvider_Location" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ServiceProvider">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ServiceProvider_Location">
+              <PropertyRef Name="ServiceProviderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ServiceProvider_Recommendation_ServiceProvider">
+          <End Role="ServiceProvider" Type="Self.ServiceProvider" Multiplicity="1" />
+          <End Role="ServiceProvider_Recommendation" Type="Self.ServiceProvider_Recommendation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ServiceProvider">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ServiceProvider_Recommendation">
+              <PropertyRef Name="ServiceProviderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ServiceProvider_SubServiceType_ServiceProvider">
+          <End Role="ServiceProvider" Type="Self.ServiceProvider" Multiplicity="1" />
+          <End Role="ServiceProvider_SubServiceType" Type="Self.ServiceProvider_SubServiceType" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ServiceProvider">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ServiceProvider_SubServiceType">
+              <PropertyRef Name="ServiceProviderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ServiceProvider_TermsAndConditions_ServiceProvider">
+          <End Role="ServiceProvider" Type="Self.ServiceProvider" Multiplicity="1" />
+          <End Role="ServiceProvider_TermsAndConditions" Type="Self.ServiceProvider_TermsAndConditions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ServiceProvider">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ServiceProvider_TermsAndConditions">
+              <PropertyRef Name="ServiceProviderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ServiceRequest_ServiceProvider_Location">
+          <End Role="ServiceProvider_Location" Type="Self.ServiceProvider_Location" Multiplicity="1" />
+          <End Role="ServiceRequest" Type="Self.ServiceRequest" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ServiceProvider_Location">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ServiceRequest">
+              <PropertyRef Name="ServiceProviderLocationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ServiceProvider_SubServiceType_SubServiceType">
+          <End Role="SubServiceType" Type="Self.SubServiceType" Multiplicity="1" />
+          <End Role="ServiceProvider_SubServiceType" Type="Self.ServiceProvider_SubServiceType" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SubServiceType">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ServiceProvider_SubServiceType">
+              <PropertyRef Name="SubServiceTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ServiceRequest_Invoice_ServiceRequest">
+          <End Role="ServiceRequest" Type="Self.ServiceRequest" Multiplicity="1" />
+          <End Role="ServiceRequest_Invoice" Type="Self.ServiceRequest_Invoice" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ServiceRequest">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ServiceRequest_Invoice">
+              <PropertyRef Name="ServiceRequestId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ServiceRequest_Quote_ServiceRequest">
+          <End Role="ServiceRequest" Type="Self.ServiceRequest" Multiplicity="1" />
+          <End Role="ServiceRequest_Quote" Type="Self.ServiceRequest_Quote" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ServiceRequest">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ServiceRequest_Quote">
+              <PropertyRef Name="ServiceRequestId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ServiceRequest_Rating_ServiceRequest">
+          <End Role="ServiceRequest" Type="Self.ServiceRequest" Multiplicity="1" />
+          <End Role="ServiceRequest_Rating" Type="Self.ServiceRequest_Rating" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ServiceRequest">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ServiceRequest_Rating">
+              <PropertyRef Name="ServiceRequestId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ServiceRequest_Invoice_Line_ServiceRequest_Invoice">
+          <End Role="ServiceRequest_Invoice" Type="Self.ServiceRequest_Invoice" Multiplicity="1" />
+          <End Role="ServiceRequest_Invoice_Line" Type="Self.ServiceRequest_Invoice_Line" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ServiceRequest_Invoice">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ServiceRequest_Invoice_Line">
+              <PropertyRef Name="ServiceRequestInvoiceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ServiceRequest_Invoice_ServiceRequest_Quote">
+          <End Role="ServiceRequest_Quote" Type="Self.ServiceRequest_Quote" Multiplicity="0..1" />
+          <End Role="ServiceRequest_Invoice" Type="Self.ServiceRequest_Invoice" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ServiceRequest_Quote">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ServiceRequest_Invoice">
+              <PropertyRef Name="ServiceRequestQuoteId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ServiceRequest_Invoice_Line_Item_ServiceRequest_Invoice_Line">
+          <End Role="ServiceRequest_Invoice_Line" Type="Self.ServiceRequest_Invoice_Line" Multiplicity="1" />
+          <End Role="ServiceRequest_Invoice_Line_Item" Type="Self.ServiceRequest_Invoice_Line_Item" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ServiceRequest_Invoice_Line">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ServiceRequest_Invoice_Line_Item">
+              <PropertyRef Name="ServiceRequestLineId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ServiceRequest_Invoice_Line_ServiceRequest_Quote_Line">
+          <End Role="ServiceRequest_Quote_Line" Type="Self.ServiceRequest_Quote_Line" Multiplicity="0..1" />
+          <End Role="ServiceRequest_Invoice_Line" Type="Self.ServiceRequest_Invoice_Line" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ServiceRequest_Quote_Line">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ServiceRequest_Invoice_Line">
+              <PropertyRef Name="ServiceRequestQuoteLineId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ServiceRequest_Invoice_Line_Item_ServiceRequest_Quote_Line_Item">
+          <End Role="ServiceRequest_Quote_Line_Item" Type="Self.ServiceRequest_Quote_Line_Item" Multiplicity="0..1" />
+          <End Role="ServiceRequest_Invoice_Line_Item" Type="Self.ServiceRequest_Invoice_Line_Item" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ServiceRequest_Quote_Line_Item">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ServiceRequest_Invoice_Line_Item">
+              <PropertyRef Name="ServiceRequestQuoteLineItemId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ServiceRequest_Quote_Line_ServiceRequest_Quote">
+          <End Role="ServiceRequest_Quote" Type="Self.ServiceRequest_Quote" Multiplicity="1" />
+          <End Role="ServiceRequest_Quote_Line" Type="Self.ServiceRequest_Quote_Line" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ServiceRequest_Quote">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ServiceRequest_Quote_Line">
+              <PropertyRef Name="ServiceRequestQuoteId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ServiceRequest_Quote_Line_Item_ServiceRequest_Quote_Line">
+          <End Role="ServiceRequest_Quote_Line" Type="Self.ServiceRequest_Quote_Line" Multiplicity="1" />
+          <End Role="ServiceRequest_Quote_Line_Item" Type="Self.ServiceRequest_Quote_Line_Item" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ServiceRequest_Quote_Line">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ServiceRequest_Quote_Line_Item">
+              <PropertyRef Name="ServiceRequestLineId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SubServiceType_ServiceType">
+          <End Role="ServiceType" Type="Self.ServiceType" Multiplicity="1" />
+          <End Role="SubServiceType" Type="Self.SubServiceType" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ServiceType">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="SubServiceType">
+              <PropertyRef Name="ServiceTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="JobMeEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="BatchNumbers" EntityType="Self.BatchNumber" />
+          <EntitySet Name="ServiceLookups" EntityType="Self.ServiceLookup" />
+          <EntitySet Name="ServiceProviders" EntityType="Self.ServiceProvider" />
+          <EntitySet Name="ServiceProvider_Accreditation" EntityType="Self.ServiceProvider_Accreditation" />
+          <EntitySet Name="ServiceProvider_Image" EntityType="Self.ServiceProvider_Image" />
+          <EntitySet Name="ServiceProvider_Location" EntityType="Self.ServiceProvider_Location" />
+          <EntitySet Name="ServiceProvider_Recommendation" EntityType="Self.ServiceProvider_Recommendation" />
+          <EntitySet Name="ServiceProvider_SubServiceType" EntityType="Self.ServiceProvider_SubServiceType" />
+          <EntitySet Name="ServiceProvider_TermsAndConditions" EntityType="Self.ServiceProvider_TermsAndConditions" />
+          <EntitySet Name="ServiceRequests" EntityType="Self.ServiceRequest" />
+          <EntitySet Name="ServiceRequest_Invoice" EntityType="Self.ServiceRequest_Invoice" />
+          <EntitySet Name="ServiceRequest_Invoice_Line" EntityType="Self.ServiceRequest_Invoice_Line" />
+          <EntitySet Name="ServiceRequest_Invoice_Line_Item" EntityType="Self.ServiceRequest_Invoice_Line_Item" />
+          <EntitySet Name="ServiceRequest_Quote" EntityType="Self.ServiceRequest_Quote" />
+          <EntitySet Name="ServiceRequest_Quote_Line" EntityType="Self.ServiceRequest_Quote_Line" />
+          <EntitySet Name="ServiceRequest_Quote_Line_Item" EntityType="Self.ServiceRequest_Quote_Line_Item" />
+          <EntitySet Name="ServiceRequest_Rating" EntityType="Self.ServiceRequest_Rating" />
+          <EntitySet Name="ServiceTypes" EntityType="Self.ServiceType" />
+          <EntitySet Name="SouthAfricanCities" EntityType="Self.SouthAfricanCity" />
+          <EntitySet Name="SubServiceTypes" EntityType="Self.SubServiceType" />
+          <AssociationSet Name="FK_ServiceProvider_Accreditation_ServiceProvider" Association="Self.FK_ServiceProvider_Accreditation_ServiceProvider">
+            <End Role="ServiceProvider" EntitySet="ServiceProviders" />
+            <End Role="ServiceProvider_Accreditation" EntitySet="ServiceProvider_Accreditation" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ServiceProvider_Image_ServiceProvider" Association="Self.FK_ServiceProvider_Image_ServiceProvider">
+            <End Role="ServiceProvider" EntitySet="ServiceProviders" />
+            <End Role="ServiceProvider_Image" EntitySet="ServiceProvider_Image" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ServiceProvider_Location_ServiceProvider" Association="Self.FK_ServiceProvider_Location_ServiceProvider">
+            <End Role="ServiceProvider" EntitySet="ServiceProviders" />
+            <End Role="ServiceProvider_Location" EntitySet="ServiceProvider_Location" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ServiceProvider_Recommendation_ServiceProvider" Association="Self.FK_ServiceProvider_Recommendation_ServiceProvider">
+            <End Role="ServiceProvider" EntitySet="ServiceProviders" />
+            <End Role="ServiceProvider_Recommendation" EntitySet="ServiceProvider_Recommendation" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ServiceProvider_SubServiceType_ServiceProvider" Association="Self.FK_ServiceProvider_SubServiceType_ServiceProvider">
+            <End Role="ServiceProvider" EntitySet="ServiceProviders" />
+            <End Role="ServiceProvider_SubServiceType" EntitySet="ServiceProvider_SubServiceType" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ServiceProvider_TermsAndConditions_ServiceProvider" Association="Self.FK_ServiceProvider_TermsAndConditions_ServiceProvider">
+            <End Role="ServiceProvider" EntitySet="ServiceProviders" />
+            <End Role="ServiceProvider_TermsAndConditions" EntitySet="ServiceProvider_TermsAndConditions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ServiceRequest_ServiceProvider_Location" Association="Self.FK_ServiceRequest_ServiceProvider_Location">
+            <End Role="ServiceProvider_Location" EntitySet="ServiceProvider_Location" />
+            <End Role="ServiceRequest" EntitySet="ServiceRequests" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ServiceProvider_SubServiceType_SubServiceType" Association="Self.FK_ServiceProvider_SubServiceType_SubServiceType">
+            <End Role="SubServiceType" EntitySet="SubServiceTypes" />
+            <End Role="ServiceProvider_SubServiceType" EntitySet="ServiceProvider_SubServiceType" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ServiceRequest_Invoice_ServiceRequest" Association="Self.FK_ServiceRequest_Invoice_ServiceRequest">
+            <End Role="ServiceRequest" EntitySet="ServiceRequests" />
+            <End Role="ServiceRequest_Invoice" EntitySet="ServiceRequest_Invoice" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ServiceRequest_Quote_ServiceRequest" Association="Self.FK_ServiceRequest_Quote_ServiceRequest">
+            <End Role="ServiceRequest" EntitySet="ServiceRequests" />
+            <End Role="ServiceRequest_Quote" EntitySet="ServiceRequest_Quote" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ServiceRequest_Rating_ServiceRequest" Association="Self.FK_ServiceRequest_Rating_ServiceRequest">
+            <End Role="ServiceRequest" EntitySet="ServiceRequests" />
+            <End Role="ServiceRequest_Rating" EntitySet="ServiceRequest_Rating" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ServiceRequest_Invoice_Line_ServiceRequest_Invoice" Association="Self.FK_ServiceRequest_Invoice_Line_ServiceRequest_Invoice">
+            <End Role="ServiceRequest_Invoice" EntitySet="ServiceRequest_Invoice" />
+            <End Role="ServiceRequest_Invoice_Line" EntitySet="ServiceRequest_Invoice_Line" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ServiceRequest_Invoice_ServiceRequest_Quote" Association="Self.FK_ServiceRequest_Invoice_ServiceRequest_Quote">
+            <End Role="ServiceRequest_Quote" EntitySet="ServiceRequest_Quote" />
+            <End Role="ServiceRequest_Invoice" EntitySet="ServiceRequest_Invoice" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ServiceRequest_Invoice_Line_Item_ServiceRequest_Invoice_Line" Association="Self.FK_ServiceRequest_Invoice_Line_Item_ServiceRequest_Invoice_Line">
+            <End Role="ServiceRequest_Invoice_Line" EntitySet="ServiceRequest_Invoice_Line" />
+            <End Role="ServiceRequest_Invoice_Line_Item" EntitySet="ServiceRequest_Invoice_Line_Item" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ServiceRequest_Invoice_Line_ServiceRequest_Quote_Line" Association="Self.FK_ServiceRequest_Invoice_Line_ServiceRequest_Quote_Line">
+            <End Role="ServiceRequest_Quote_Line" EntitySet="ServiceRequest_Quote_Line" />
+            <End Role="ServiceRequest_Invoice_Line" EntitySet="ServiceRequest_Invoice_Line" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ServiceRequest_Invoice_Line_Item_ServiceRequest_Quote_Line_Item" Association="Self.FK_ServiceRequest_Invoice_Line_Item_ServiceRequest_Quote_Line_Item">
+            <End Role="ServiceRequest_Quote_Line_Item" EntitySet="ServiceRequest_Quote_Line_Item" />
+            <End Role="ServiceRequest_Invoice_Line_Item" EntitySet="ServiceRequest_Invoice_Line_Item" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ServiceRequest_Quote_Line_ServiceRequest_Quote" Association="Self.FK_ServiceRequest_Quote_Line_ServiceRequest_Quote">
+            <End Role="ServiceRequest_Quote" EntitySet="ServiceRequest_Quote" />
+            <End Role="ServiceRequest_Quote_Line" EntitySet="ServiceRequest_Quote_Line" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ServiceRequest_Quote_Line_Item_ServiceRequest_Quote_Line" Association="Self.FK_ServiceRequest_Quote_Line_Item_ServiceRequest_Quote_Line">
+            <End Role="ServiceRequest_Quote_Line" EntitySet="ServiceRequest_Quote_Line" />
+            <End Role="ServiceRequest_Quote_Line_Item" EntitySet="ServiceRequest_Quote_Line_Item" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SubServiceType_ServiceType" Association="Self.FK_SubServiceType_ServiceType">
+            <End Role="ServiceType" EntitySet="ServiceTypes" />
+            <End Role="SubServiceType" EntitySet="SubServiceTypes" />
+          </AssociationSet>
+          <EntitySet Name="Users" EntityType="JobMeModel.User" />
+          <EntitySet Name="AvailableServices" EntityType="JobMeModel.AvailableService" />
+        </EntityContainer>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="UserID" Type="Int32" Nullable="false" />
+          <Property Name="Username" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Password" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Active" Type="Boolean" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="AvailableService">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="SubServiceType" />
+            <PropertyRef Name="ServiceType" />
+            <PropertyRef Name="ServiceProviderId" />
+            <PropertyRef Name="SubServiceTypeId" />
+            <PropertyRef Name="ServiceTypeID" />
+            <PropertyRef Name="ServiceProviderName" />
+            <PropertyRef Name="Rank" />
+            <PropertyRef Name="Latitude" />
+            <PropertyRef Name="Longitude" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="SubServiceType" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="ServiceType" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="ServiceProviderId" Type="Int32" Nullable="false" />
+          <Property Name="SubServiceTypeId" Type="Int32" Nullable="false" />
+          <Property Name="ServiceTypeID" Type="Int32" Nullable="false" />
+          <Property Name="ServiceProviderName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Logo" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Rank" Type="Int32" Nullable="false" />
+          <Property Name="Latitude" Type="Decimal" Nullable="false" Precision="9" Scale="6" />
+          <Property Name="Longitude" Type="Decimal" Nullable="false" Precision="9" Scale="6" />
+          <Property Name="CalloutFee" Type="Decimal" Precision="19" Scale="4" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="JobMeModelStoreContainer" CdmEntityContainer="JobMeEntities">
+          <EntitySetMapping Name="BatchNumbers">
+            <EntityTypeMapping TypeName="JobMeModel.BatchNumber">
+              <MappingFragment StoreEntitySet="BatchNumber">
+                <ScalarProperty Name="Batch" ColumnName="Batch" />
+                <ScalarProperty Name="UniqueKey" ColumnName="UniqueKey" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ServiceLookups">
+            <EntityTypeMapping TypeName="JobMeModel.ServiceLookup">
+              <MappingFragment StoreEntitySet="ServiceLookup">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ServiceProviders">
+            <EntityTypeMapping TypeName="JobMeModel.ServiceProvider">
+              <MappingFragment StoreEntitySet="ServiceProvider">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="AspNetUserId" ColumnName="AspNetUserId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="LogoURL" ColumnName="LogoURL" />
+                <ScalarProperty Name="Ranking" ColumnName="Ranking" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="DateUpdated" ColumnName="DateUpdated" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ServiceProvider_Accreditation">
+            <EntityTypeMapping TypeName="JobMeModel.ServiceProvider_Accreditation">
+              <MappingFragment StoreEntitySet="ServiceProvider_Accreditation">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="ServiceProviderId" ColumnName="ServiceProviderId" />
+                <ScalarProperty Name="Url" ColumnName="Url" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="DateUpdated" ColumnName="DateUpdated" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ServiceProvider_Image">
+            <EntityTypeMapping TypeName="JobMeModel.ServiceProvider_Image">
+              <MappingFragment StoreEntitySet="ServiceProvider_Image">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="ServiceProviderId" ColumnName="ServiceProviderId" />
+                <ScalarProperty Name="Url" ColumnName="Url" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="DateUpdated" ColumnName="DateUpdated" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ServiceProvider_Location">
+            <EntityTypeMapping TypeName="JobMeModel.ServiceProvider_Location">
+              <MappingFragment StoreEntitySet="ServiceProvider_Location">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="ServiceProviderId" ColumnName="ServiceProviderId" />
+                <ScalarProperty Name="ContactNo" ColumnName="ContactNo" />
+                <ScalarProperty Name="Address1" ColumnName="Address1" />
+                <ScalarProperty Name="Address2" ColumnName="Address2" />
+                <ScalarProperty Name="Suburb" ColumnName="Suburb" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="Province" ColumnName="Province" />
+                <ScalarProperty Name="Longitude" ColumnName="Longitude" />
+                <ScalarProperty Name="Latitude" ColumnName="Latitude" />
+                <ScalarProperty Name="CalloutFee" ColumnName="CalloutFee" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="DateUpdated" ColumnName="DateUpdated" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ServiceProvider_Recommendation">
+            <EntityTypeMapping TypeName="JobMeModel.ServiceProvider_Recommendation">
+              <MappingFragment StoreEntitySet="ServiceProvider_Recommendation">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="RecommenderAspNetUserId" ColumnName="RecommenderAspNetUserId" />
+                <ScalarProperty Name="ServiceProviderId" ColumnName="ServiceProviderId" />
+                <ScalarProperty Name="Recommendation" ColumnName="Recommendation" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="DateUpdated" ColumnName="DateUpdated" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ServiceProvider_SubServiceType">
+            <EntityTypeMapping TypeName="JobMeModel.ServiceProvider_SubServiceType">
+              <MappingFragment StoreEntitySet="ServiceProvider_SubServiceType">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="ServiceProviderId" ColumnName="ServiceProviderId" />
+                <ScalarProperty Name="SubServiceTypeId" ColumnName="SubServiceTypeId" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="DateUpdated" ColumnName="DateUpdated" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ServiceProvider_TermsAndConditions">
+            <EntityTypeMapping TypeName="JobMeModel.ServiceProvider_TermsAndConditions">
+              <MappingFragment StoreEntitySet="ServiceProvider_TermsAndConditions">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="ServiceProviderId" ColumnName="ServiceProviderId" />
+                <ScalarProperty Name="Terms" ColumnName="Terms" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="DateUpdated" ColumnName="DateUpdated" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ServiceRequests">
+            <EntityTypeMapping TypeName="JobMeModel.ServiceRequest">
+              <MappingFragment StoreEntitySet="ServiceRequest">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="RequesterAspNetUserId" ColumnName="RequesterAspNetUserId" />
+                <ScalarProperty Name="ServiceProviderLocationId" ColumnName="ServiceProviderLocationId" />
+                <ScalarProperty Name="RequestFromDate" ColumnName="RequestFromDate" />
+                <ScalarProperty Name="RequestToDate" ColumnName="RequestToDate" />
+                <ScalarProperty Name="Details" ColumnName="Details" />
+                <ScalarProperty Name="DateAccepted" ColumnName="DateAccepted" />
+                <ScalarProperty Name="DateCompleted" ColumnName="DateCompleted" />
+                <ScalarProperty Name="ActualCalloutFee" ColumnName="ActualCalloutFee" />
+                <ScalarProperty Name="TermsAcceptedDate" ColumnName="TermsAcceptedDate" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="DateUpdated" ColumnName="DateUpdated" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ServiceRequest_Invoice">
+            <EntityTypeMapping TypeName="JobMeModel.ServiceRequest_Invoice">
+              <MappingFragment StoreEntitySet="ServiceRequest_Invoice">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="ServiceRequestId" ColumnName="ServiceRequestId" />
+                <ScalarProperty Name="InvoiceNo" ColumnName="InvoiceNo" />
+                <ScalarProperty Name="DateOfInvoice" ColumnName="DateOfInvoice" />
+                <ScalarProperty Name="Subtotal" ColumnName="Subtotal" />
+                <ScalarProperty Name="Total" ColumnName="Total" />
+                <ScalarProperty Name="Vat" ColumnName="Vat" />
+                <ScalarProperty Name="Discount" ColumnName="Discount" />
+                <ScalarProperty Name="ServiceRequestQuoteId" ColumnName="ServiceRequestQuoteId" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="DateUpdated" ColumnName="DateUpdated" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ServiceRequest_Invoice_Line">
+            <EntityTypeMapping TypeName="JobMeModel.ServiceRequest_Invoice_Line">
+              <MappingFragment StoreEntitySet="ServiceRequest_Invoice_Line">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="ServiceRequestInvoiceId" ColumnName="ServiceRequestInvoiceId" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="PaymentGatewayRefNo" ColumnName="PaymentGatewayRefNo" />
+                <ScalarProperty Name="DateOfPayment" ColumnName="DateOfPayment" />
+                <ScalarProperty Name="PaymentTotal" ColumnName="PaymentTotal" />
+                <ScalarProperty Name="ServiceRequestQuoteLineId" ColumnName="ServiceRequestQuoteLineId" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="DateUpdated" ColumnName="DateUpdated" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ServiceRequest_Invoice_Line_Item">
+            <EntityTypeMapping TypeName="JobMeModel.ServiceRequest_Invoice_Line_Item">
+              <MappingFragment StoreEntitySet="ServiceRequest_Invoice_Line_Item">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="ServiceRequestLineId" ColumnName="ServiceRequestLineId" />
+                <ScalarProperty Name="Qty" ColumnName="Qty" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="Vat" ColumnName="Vat" />
+                <ScalarProperty Name="ServiceRequestQuoteLineItemId" ColumnName="ServiceRequestQuoteLineItemId" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="DateUpdated" ColumnName="DateUpdated" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ServiceRequest_Quote">
+            <EntityTypeMapping TypeName="JobMeModel.ServiceRequest_Quote">
+              <MappingFragment StoreEntitySet="ServiceRequest_Quote">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="ServiceRequestId" ColumnName="ServiceRequestId" />
+                <ScalarProperty Name="QuoteNo" ColumnName="QuoteNo" />
+                <ScalarProperty Name="DateOfQuote" ColumnName="DateOfQuote" />
+                <ScalarProperty Name="Subtotal" ColumnName="Subtotal" />
+                <ScalarProperty Name="Total" ColumnName="Total" />
+                <ScalarProperty Name="Vat" ColumnName="Vat" />
+                <ScalarProperty Name="Discount" ColumnName="Discount" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="DateUpdated" ColumnName="DateUpdated" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ServiceRequest_Quote_Line">
+            <EntityTypeMapping TypeName="JobMeModel.ServiceRequest_Quote_Line">
+              <MappingFragment StoreEntitySet="ServiceRequest_Quote_Line">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="ServiceRequestQuoteId" ColumnName="ServiceRequestQuoteId" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="PaymentGatewayRefNo" ColumnName="PaymentGatewayRefNo" />
+                <ScalarProperty Name="DateOfPayment" ColumnName="DateOfPayment" />
+                <ScalarProperty Name="PaymentTotal" ColumnName="PaymentTotal" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="DateUpdated" ColumnName="DateUpdated" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ServiceRequest_Quote_Line_Item">
+            <EntityTypeMapping TypeName="JobMeModel.ServiceRequest_Quote_Line_Item">
+              <MappingFragment StoreEntitySet="ServiceRequest_Quote_Line_Item">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="ServiceRequestLineId" ColumnName="ServiceRequestLineId" />
+                <ScalarProperty Name="Qty" ColumnName="Qty" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="Vat" ColumnName="Vat" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="DateUpdated" ColumnName="DateUpdated" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ServiceRequest_Rating">
+            <EntityTypeMapping TypeName="JobMeModel.ServiceRequest_Rating">
+              <MappingFragment StoreEntitySet="ServiceRequest_Rating">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="ServiceRequestId" ColumnName="ServiceRequestId" />
+                <ScalarProperty Name="Rating" ColumnName="Rating" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="DateUpdated" ColumnName="DateUpdated" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ServiceTypes">
+            <EntityTypeMapping TypeName="JobMeModel.ServiceType">
+              <MappingFragment StoreEntitySet="ServiceType">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="DateUpdated" ColumnName="DateUpdated" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SouthAfricanCities">
+            <EntityTypeMapping TypeName="JobMeModel.SouthAfricanCity">
+              <MappingFragment StoreEntitySet="SouthAfricanCities">
+                <ScalarProperty Name="CityId" ColumnName="CityId" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="AccentCity" ColumnName="AccentCity" />
+                <ScalarProperty Name="ProvinceName" ColumnName="ProvinceName" />
+                <ScalarProperty Name="Latitude" ColumnName="Latitude" />
+                <ScalarProperty Name="Longitude" ColumnName="Longitude" />
+                <ScalarProperty Name="ProvinceID" ColumnName="ProvinceID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SubServiceTypes">
+            <EntityTypeMapping TypeName="JobMeModel.SubServiceType">
+              <MappingFragment StoreEntitySet="SubServiceType">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="ServiceTypeId" ColumnName="ServiceTypeId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="DateUpdated" ColumnName="DateUpdated" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="JobMeModel.User">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AvailableServices">
+            <EntityTypeMapping TypeName="JobMeModel.AvailableService">
+              <MappingFragment StoreEntitySet="AvailableServices">
+                <ScalarProperty Name="CalloutFee" ColumnName="CalloutFee" />
+                <ScalarProperty Name="Longitude" ColumnName="Longitude" />
+                <ScalarProperty Name="Latitude" ColumnName="Latitude" />
+                <ScalarProperty Name="Rank" ColumnName="Rank" />
+                <ScalarProperty Name="Logo" ColumnName="Logo" />
+                <ScalarProperty Name="ServiceProviderName" ColumnName="ServiceProviderName" />
+                <ScalarProperty Name="ServiceTypeID" ColumnName="ServiceTypeID" />
+                <ScalarProperty Name="SubServiceTypeId" ColumnName="SubServiceTypeId" />
+                <ScalarProperty Name="ServiceProviderId" ColumnName="ServiceProviderId" />
+                <ScalarProperty Name="ServiceType" ColumnName="ServiceType" />
+                <ScalarProperty Name="SubServiceType" ColumnName="SubServiceType" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

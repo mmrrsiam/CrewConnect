@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="0cd1900100844d2198d08a0c454a77f0" Name="Diagram1">
+        <EntityTypeShape EntityType="JobMeModel.BatchNumber" Width="1.5" PointX="5.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="JobMeModel.ServiceLookup" Width="1.5" PointX="5.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="JobMeModel.ServiceProvider" Width="1.5" PointX="0.75" PointY="15.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="JobMeModel.ServiceProvider_Accreditation" Width="1.5" PointX="3" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="JobMeModel.ServiceProvider_Image" Width="1.5" PointX="3" PointY="10.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="JobMeModel.ServiceProvider_Location" Width="1.5" PointX="3" PointY="15.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="JobMeModel.ServiceProvider_Recommendation" Width="1.5" PointX="3" PointY="22.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="JobMeModel.ServiceProvider_SubServiceType" Width="1.5" PointX="6" PointY="11.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="JobMeModel.ServiceProvider_TermsAndConditions" Width="1.5" PointX="3" PointY="29.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="JobMeModel.ServiceRequest" Width="1.5" PointX="5.25" PointY="15.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="JobMeModel.ServiceRequest_Invoice" Width="1.5" PointX="9.75" PointY="14.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="JobMeModel.ServiceRequest_Invoice_Line" Width="1.5" PointX="12" PointY="14.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="JobMeModel.ServiceRequest_Invoice_Line_Item" Width="1.5" PointX="14.25" PointY="16.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="JobMeModel.ServiceRequest_Quote" Width="1.5" PointX="7.5" PointY="19" IsExpanded="true" />
+        <EntityTypeShape EntityType="JobMeModel.ServiceRequest_Quote_Line" Width="1.5" PointX="9.75" PointY="19.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="JobMeModel.ServiceRequest_Quote_Line_Item" Width="1.5" PointX="12" PointY="19.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="JobMeModel.ServiceRequest_Rating" Width="1.5" PointX="7.5" PointY="23.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="JobMeModel.ServiceType" Width="1.5" PointX="1.5" PointY="2.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="JobMeModel.SouthAfricanCity" Width="1.5" PointX="5.75" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="JobMeModel.SubServiceType" Width="1.5" PointX="3.75" PointY="2.25" IsExpanded="true" />
+        <AssociationConnector Association="JobMeModel.FK_ServiceProvider_Accreditation_ServiceProvider" ManuallyRouted="false" />
+        <AssociationConnector Association="JobMeModel.FK_ServiceProvider_Image_ServiceProvider" ManuallyRouted="false" />
+        <AssociationConnector Association="JobMeModel.FK_ServiceProvider_Location_ServiceProvider" ManuallyRouted="false" />
+        <AssociationConnector Association="JobMeModel.FK_ServiceProvider_Recommendation_ServiceProvider" ManuallyRouted="false" />
+        <AssociationConnector Association="JobMeModel.FK_ServiceProvider_SubServiceType_ServiceProvider" ManuallyRouted="false" />
+        <AssociationConnector Association="JobMeModel.FK_ServiceProvider_TermsAndConditions_ServiceProvider" ManuallyRouted="false" />
+        <AssociationConnector Association="JobMeModel.FK_ServiceRequest_ServiceProvider_Location" ManuallyRouted="false" />
+        <AssociationConnector Association="JobMeModel.FK_ServiceProvider_SubServiceType_SubServiceType" ManuallyRouted="false" />
+        <AssociationConnector Association="JobMeModel.FK_ServiceRequest_Invoice_ServiceRequest" ManuallyRouted="false" />
+        <AssociationConnector Association="JobMeModel.FK_ServiceRequest_Quote_ServiceRequest" ManuallyRouted="false" />
+        <AssociationConnector Association="JobMeModel.FK_ServiceRequest_Rating_ServiceRequest" ManuallyRouted="false" />
+        <AssociationConnector Association="JobMeModel.FK_ServiceRequest_Invoice_Line_ServiceRequest_Invoice" ManuallyRouted="false" />
+        <AssociationConnector Association="JobMeModel.FK_ServiceRequest_Invoice_ServiceRequest_Quote" ManuallyRouted="false" />
+        <AssociationConnector Association="JobMeModel.FK_ServiceRequest_Invoice_Line_Item_ServiceRequest_Invoice_Line" ManuallyRouted="false" />
+        <AssociationConnector Association="JobMeModel.FK_ServiceRequest_Invoice_Line_ServiceRequest_Quote_Line" ManuallyRouted="false" />
+        <AssociationConnector Association="JobMeModel.FK_ServiceRequest_Invoice_Line_Item_ServiceRequest_Quote_Line_Item" ManuallyRouted="false" />
+        <AssociationConnector Association="JobMeModel.FK_ServiceRequest_Quote_Line_ServiceRequest_Quote" ManuallyRouted="false" />
+        <AssociationConnector Association="JobMeModel.FK_ServiceRequest_Quote_Line_Item_ServiceRequest_Quote_Line" ManuallyRouted="false" />
+        <AssociationConnector Association="JobMeModel.FK_SubServiceType_ServiceType" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="JobMeModel.User" Width="1.5" PointX="8.375" PointY="0.75" />
+        <EntityTypeShape EntityType="JobMeModel.AvailableService" Width="1.5" PointX="8.375" PointY="3.75" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
