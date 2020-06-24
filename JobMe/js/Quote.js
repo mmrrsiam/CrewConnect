@@ -1,4 +1,4 @@
-﻿//@ sourceURL=CreateQuote.js
+﻿//@ sourceURL=Quote.js
 var pay = false;
 $(document).ready(function () {
 
@@ -15,7 +15,16 @@ $(document).ready(function () {
                     AddLineInfo(x);
                 });
                 $('#Total').html("R" + e.Total);  
-                
+                if (e.DateOfPayment) {
+                    $('#paid').show();
+                    $('#PayBtn').hide();
+                    $('#paidDate').html(e.DateOfPayment);
+
+                }
+
+                $('.creation').hide();
+                $('.invoice').show();
+                $("input").prop("disabled", true);
             });
         } catch (r) {
         bootbox.alert('Internal error: Missing info.', function () { LoadPage('FindService'); });
@@ -23,7 +32,10 @@ $(document).ready(function () {
         }
 
     } else if (GetQueryString()['ServiceRequestID']) {
-        
+        $('.creation').show();
+        $('.invoice').hide();
+        $("input").prop("disabled", false);
+
 
         $('#addline').on('click', function () {
             AddLine();

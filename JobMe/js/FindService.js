@@ -21,15 +21,15 @@ $(document).ready(function () {
 });
 function initMap() {
     map = new google.maps.Map(document.getElementById("map"), {
-        center: { lat: 0, lng: 0 },
-        zoom: 8
+        center: { lat: -25.7478676, lng: 28.2292712 },
+        zoom: 10
     });
     var geocoder = new google.maps.Geocoder();
-    geocoder.geocode({ 'address': "Johannesburg" }, function (results, status) {
+    geocoder.geocode({ 'address': "South Africa Johannesburg" }, function (results, status) {
         if (status === 'OK') {
             map.setCenter(results[0].geometry.location);
         } else {
-            alert('Geocode was not successful for the following reason: ' + status);
+            //alert('Geocode was not successful for the following reason: ' + status);
         }
     });
 

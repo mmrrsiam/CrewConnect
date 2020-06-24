@@ -46,9 +46,12 @@
 <div id="content" class="content-wrapper" style="margin: 30px 10%;overflow:hidden">
     <div style="margin-bottom:45px">
         <div style="float:right" id="CreateBtn" class="btn btn-dark" onclick="Create()">Create Quote</div>
-        <div style="float:right;display:none" id="PayBtn" class="btn btn-danger"  onclick="$('FullPayment').submit()">Pay</div>
-
-        <div class="header">Quote Detail</div>
+        <div style="display: none;float: right;width: 120px;top: 38px;cursor: pointer;" id="PayBtn" class="btn btn-danger" onclick="$('FullPayment').submit()">Pay</div>
+        <div id="paid" class="alert bg-success alert-styled-left" style="display:none" >
+            <span class="font-weight-semibold">Paid</span> on <strong id="paidDate"></strong>.
+        </div>
+        <div class="header creation">Quote Detail</div>
+        <div class="header invoice">Invoice #</div>
         <div>
             <div class="row">
                 <div class="col-md-5"><div><label>Client Name</label><span>info</span></div></div>
@@ -59,11 +62,11 @@
         </div>
     </div>
     <div id="Lines">
-        <button class="btn btn-dark bg-purple" id="addline" style="width:100%">+ Add Line</button>
+        <button class="btn btn-dark bg-purple creation" id="addline" style="width:100%">+ Add Line</button>
         <div style="margin:0px 30px;display:none" id="FullLine" >
             <div>
                 <input id="LineHeader" class="LineHeader" type="text" placeholder="Line Description" />
-                <button class="btn btn-dark bg-blue AddItem" id="additem" onclick="AddItem(this);" >+ Add item</button>
+                <button class="btn btn-dark bg-blue AddItem creation" id="additem" onclick="AddItem(this);" >+ Add item</button>
 
             </div>
             <table width="100%" id="tbl" >

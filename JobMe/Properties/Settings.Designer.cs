@@ -67,5 +67,14 @@ namespace JobMe.Properties {
                 return ((string)(this["AdminUsername"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("AIzaSyDfRO0tpa7dR_LnUO2Oo6wszSnUs6LP4W4")]
+        public string GoogleMapApiKey {
+            get {
+                return ((string)(this["GoogleMapApiKey"]));
+            }
+        }
     }
 }

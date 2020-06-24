@@ -19,6 +19,7 @@ using System.ServiceModel.Web;
 using System.Text;
 using System.Web;
 using System.Web.UI.WebControls;
+using EntityFramework.Extensions;
 
 namespace JobMe
 {
@@ -55,10 +56,8 @@ namespace JobMe
             {
                 string cookie = currentCookie.Trim();
 
-                // Split the key/values out for each cookie.
                 string[] cookieKeyValue = cookie.Split('=');
 
-                // Compare the keys
                 if (cookieKeyValue[0] == cookieKey)
                 {
                     result = cookieKeyValue[1];
@@ -73,8 +72,6 @@ namespace JobMe
                 throw new KeyNotFoundException(msg);
             }
 
-            // Note: The result may still be empty if there wasn't a value set for the cookie.
-            // e.g. 'key=' rather than 'key=123'
             return result;
         }
 
@@ -148,7 +145,6 @@ namespace JobMe
             UserInfo user = null;
             try
             {
-                //user = (UserInfo)Newtonsoft.Json.JsonConvert.DeserializeObject(GetCookieValue("User"));
                 user = (UserInfo)HttpContext.Current.Session["User"];
                 if (user == null)
                     return "Login";
@@ -186,7 +182,6 @@ namespace JobMe
             var res = new Dictionary<ServiceType, List<object>>();
             using (JobMeEntities db = new JobMeEntities())
             {
-                // var temp=db.ServiceTypes.ToDictionary(x => x.Id, x => x.SubServiceTypes);
                 var temp = db.SubServiceTypes.Select(x => new { ID = x.Id, Name = x.Name, ServiceTypeName = x.ServiceType.Name }).ToList();
                 var r = JsonConvert.SerializeObject(temp, new JsonSerializerSettings
                 {
@@ -257,7 +252,7 @@ namespace JobMe
                     db.ServiceRequests.Add(rq);
                     db.SaveChanges();
 
-                     EmailAsync(rq.ServiceProvider_Location.Email ,"" , "You have a new Job oppotunity.", "Link:" + CurrentUri + "/main.html&CreateQuote&ServiceRequestID=" + rq.Id);
+                     EmailAsync(rq.ServiceProvider_Location.Email ,"" , "You have a new Job oppotunity.", "Link:" + CurrentUri + "/main.html&Quote&ServiceRequestID=" + rq.Id);
                 }
 
                 return true;
@@ -286,14 +281,7 @@ namespace JobMe
                 return "";
             }
         }
-        [OperationContract]
-        [WebInvoke(Method = "POST", BodyStyle = WebMessageBodyStyle.WrappedRequest, RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
-        public string PayQuote(int ServiceRequestID, decimal TotalDiscountPercentage, decimal Vat, string itemsJson)
-        {
-            //PayFast.
-            return "";
 
-        }
         [OperationContract]
         [WebInvoke(Method = "POST", BodyStyle = WebMessageBodyStyle.WrappedRequest, RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
         public string GetQuoteInfo(int QuoteID)
@@ -303,6 +291,26 @@ namespace JobMe
                 using (JobMeEntities db = new JobMeEntities())
                 {
                     var info = db.ServiceRequest_Quote.Single(x => x.Id == QuoteID);
+                    return JsonConvert.SerializeObject(info, new JsonSerializerSettings
+                    {
+                        ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+                    });
+                }
+
+            } catch (Exception e)
+            {
+                return "";
+            }
+        }
+        [OperationContract]
+        [WebInvoke(Method = "POST", BodyStyle = WebMessageBodyStyle.WrappedRequest, RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
+        public string GetRequestList()
+        {
+            try
+            {
+                using (JobMeEntities db = new JobMeEntities())
+                {
+                    var info = db.ServiceRequests;
                     return JsonConvert.SerializeObject(info, new JsonSerializerSettings
                     {
                         ReferenceLoopHandling = ReferenceLoopHandling.Ignore
@@ -338,7 +346,7 @@ namespace JobMe
                     qt.PaymentGatewayRefNo = Guid.NewGuid().ToString();
                     db.ServiceRequest_Quote.Add(qt);
                     db.SaveChanges();
-
+                    
                     foreach (var line in items)
                     {
                         var qtl = new ServiceRequest_Quote_Line();
@@ -357,7 +365,7 @@ namespace JobMe
 
                     var requester = db.ServiceRequests.Single(x => x.Id == ServiceRequestID).AspNetUser;
 
-                    EmailAsync( requester.Email , "", "Your quote is ready for requested service.", "Link: " + CurrentUri + "Main.html/CreateQuote&QuoteID=" + qt.Id);
+                    EmailAsync( requester.Email , "", "Your quote is ready for requested service.", "Link: " + CurrentUri + "Main.html/Quote&QuoteID=" + qt.Id);
                 }
                 return "Quote Created";
             }
@@ -365,6 +373,24 @@ namespace JobMe
             {
                 return "";
             }
+        }
+        [OperationContract]
+        [WebInvoke(Method = "POST", BodyStyle = WebMessageBodyStyle.WrappedRequest, RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
+        public string PaymentSuccessful(string PaymentID)
+        {
+            try
+            {
+                using (JobMeEntities db = new JobMeEntities())
+                {
+                    var qt = db.ServiceRequest_Quote.Single(x => x.PaymentGatewayRefNo == PaymentID);
+                    qt.DateOfPayment = DateTime.Now;
+                    foreach(var ql in qt.ServiceRequest_Quote_Line)
+                        ql.DateOfPayment = DateTime.Now;
+                    db.SaveChanges();
+                }
+            }
+            catch { return "Error"; }
+            return "Done";
         }
         [OperationContract]
         [WebInvoke(Method = "POST", BodyStyle = WebMessageBodyStyle.WrappedRequest, RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]

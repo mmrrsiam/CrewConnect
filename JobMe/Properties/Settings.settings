@@ -17,5 +17,8 @@
     <Setting Name="AdminUsername" Type="System.String" Scope="Application">
       <Value Profile="(Default)" />
     </Setting>
+    <Setting Name="GoogleMapApiKey" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">AIzaSyDfRO0tpa7dR_LnUO2Oo6wszSnUs6LP4W4</Value>
+    </Setting>
   </Settings>
 </SettingsFile>
