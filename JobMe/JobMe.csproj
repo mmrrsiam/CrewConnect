@@ -118,6 +118,7 @@
     <Content Include="assets\css\components.min.css" />
     <Content Include="assets\css\layout.css" />
     <Content Include="assets\css\layout.min.css" />
+    <Content Include="assets\images\Logo.png" />
     <Content Include="assets\images\logo_light.png" />
     <Content Include="assets\images\Service.png" />
     <Content Include="assets\images\willem_small.jpg" />
