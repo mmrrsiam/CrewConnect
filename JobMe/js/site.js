@@ -83,8 +83,12 @@ function CallService(fn, params, callback) {
         url: 'JobMeService.svc/'+fn,
         data: JSON.stringify(params),
         success: function (res) {
+            var ret = res.d;
+            try {
+                ret = JSON.parse(res.d);
+            } catch (r) { }
             if (callback)
-                callback(JSON.parse(res.d));
+                callback(ret);
         }
     });
 }

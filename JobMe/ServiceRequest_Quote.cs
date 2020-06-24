@@ -34,6 +34,7 @@ namespace JobMe
         public Nullable<System.DateTime> DateUpdated { get; set; }
         public string UpdatedBy { get; set; }
         public bool IsDeleted { get; set; }
+        public string PaymentGatewayRefNo { get; set; }
     
         public virtual ServiceRequest ServiceRequest { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

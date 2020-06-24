@@ -30,6 +30,7 @@ namespace JobMe
         public Nullable<System.DateTime> DateUpdated { get; set; }
         public string UpdatedBy { get; set; }
         public bool IsDeleted { get; set; }
+        public string Description { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ServiceRequest_Invoice_Line_Item> ServiceRequest_Invoice_Line_Item { get; set; }

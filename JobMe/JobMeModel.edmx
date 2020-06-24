@@ -242,6 +242,7 @@
           <Property Name="DateUpdated" Type="datetime" />
           <Property Name="UpdatedBy" Type="nvarchar" MaxLength="450" />
           <Property Name="IsDeleted" Type="bit" Nullable="false" />
+          <Property Name="PaymentGatewayRefNo" Type="varchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="ServiceRequest_Quote_Line">
           <Key>
@@ -273,6 +274,7 @@
           <Property Name="DateUpdated" Type="datetime" />
           <Property Name="UpdatedBy" Type="nvarchar" MaxLength="450" />
           <Property Name="IsDeleted" Type="bit" Nullable="false" />
+          <Property Name="Description" Type="varchar" MaxLength="450" />
         </EntityType>
         <EntityType Name="ServiceRequest_Rating">
           <Key>
@@ -918,9 +920,9 @@ warning 6002: The table/view 'JobMe.dbo.AvailableServices' does not have a prima
           <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="ServiceProvider_Location" Relationship="Self.FK_ServiceRequest_ServiceProvider_Location" FromRole="ServiceRequest" ToRole="ServiceProvider_Location" />
           <NavigationProperty Name="ServiceRequest_Invoice" Relationship="Self.FK_ServiceRequest_Invoice_ServiceRequest" FromRole="ServiceRequest" ToRole="ServiceRequest_Invoice" />
-          <NavigationProperty Name="ServiceRequest_Quote" Relationship="Self.FK_ServiceRequest_Quote_ServiceRequest" FromRole="ServiceRequest" ToRole="ServiceRequest_Quote" />
           <NavigationProperty Name="ServiceRequest_Rating" Relationship="Self.FK_ServiceRequest_Rating_ServiceRequest" FromRole="ServiceRequest" ToRole="ServiceRequest_Rating" />
           <NavigationProperty Name="AspNetUser" Relationship="JobMeModel.FK_ServiceRequest_AspNetUsers" FromRole="ServiceRequest" ToRole="AspNetUser" />
+          <NavigationProperty Name="ServiceRequest_Quote" Relationship="JobMeModel.FK_ServiceRequest_Quote_ServiceRequest" FromRole="ServiceRequest" ToRole="ServiceRequest_Quote" />
         </EntityType>
         <EntityType Name="ServiceRequest_Invoice">
           <Key>
@@ -942,7 +944,7 @@ warning 6002: The table/view 'JobMe.dbo.AvailableServices' does not have a prima
           <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="ServiceRequest" Relationship="Self.FK_ServiceRequest_Invoice_ServiceRequest" FromRole="ServiceRequest_Invoice" ToRole="ServiceRequest" />
           <NavigationProperty Name="ServiceRequest_Invoice_Line" Relationship="Self.FK_ServiceRequest_Invoice_Line_ServiceRequest_Invoice" FromRole="ServiceRequest_Invoice" ToRole="ServiceRequest_Invoice_Line" />
-          <NavigationProperty Name="ServiceRequest_Quote" Relationship="Self.FK_ServiceRequest_Invoice_ServiceRequest_Quote" FromRole="ServiceRequest_Invoice" ToRole="ServiceRequest_Quote" />
+          <NavigationProperty Name="ServiceRequest_Quote" Relationship="JobMeModel.FK_ServiceRequest_Invoice_ServiceRequest_Quote" FromRole="ServiceRequest_Invoice" ToRole="ServiceRequest_Quote" />
         </EntityType>
         <EntityType Name="ServiceRequest_Invoice_Line">
           <Key>
@@ -982,27 +984,6 @@ warning 6002: The table/view 'JobMe.dbo.AvailableServices' does not have a prima
           <NavigationProperty Name="ServiceRequest_Invoice_Line" Relationship="Self.FK_ServiceRequest_Invoice_Line_Item_ServiceRequest_Invoice_Line" FromRole="ServiceRequest_Invoice_Line_Item" ToRole="ServiceRequest_Invoice_Line" />
           <NavigationProperty Name="ServiceRequest_Quote_Line_Item" Relationship="Self.FK_ServiceRequest_Invoice_Line_Item_ServiceRequest_Quote_Line_Item" FromRole="ServiceRequest_Invoice_Line_Item" ToRole="ServiceRequest_Quote_Line_Item" />
         </EntityType>
-        <EntityType Name="ServiceRequest_Quote">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ServiceRequestId" Type="Int32" Nullable="false" />
-          <Property Name="QuoteNo" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="DateOfQuote" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="Subtotal" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
-          <Property Name="Total" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
-          <Property Name="Vat" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
-          <Property Name="Discount" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="DateCreated" Type="DateTime" Precision="3" />
-          <Property Name="CreatedBy" Type="String" MaxLength="450" FixedLength="false" Unicode="true" />
-          <Property Name="DateUpdated" Type="DateTime" Precision="3" />
-          <Property Name="UpdatedBy" Type="String" MaxLength="450" FixedLength="false" Unicode="true" />
-          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="ServiceRequest" Relationship="Self.FK_ServiceRequest_Quote_ServiceRequest" FromRole="ServiceRequest_Quote" ToRole="ServiceRequest" />
-          <NavigationProperty Name="ServiceRequest_Invoice" Relationship="Self.FK_ServiceRequest_Invoice_ServiceRequest_Quote" FromRole="ServiceRequest_Quote" ToRole="ServiceRequest_Invoice" />
-          <NavigationProperty Name="ServiceRequest_Quote_Line" Relationship="Self.FK_ServiceRequest_Quote_Line_ServiceRequest_Quote" FromRole="ServiceRequest_Quote" ToRole="ServiceRequest_Quote_Line" />
-        </EntityType>
         <EntityType Name="ServiceRequest_Quote_Line">
           <Key>
             <PropertyRef Name="Id" />
@@ -1019,8 +1000,8 @@ warning 6002: The table/view 'JobMe.dbo.AvailableServices' does not have a prima
           <Property Name="UpdatedBy" Type="String" MaxLength="450" FixedLength="false" Unicode="true" />
           <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="ServiceRequest_Invoice_Line" Relationship="Self.FK_ServiceRequest_Invoice_Line_ServiceRequest_Quote_Line" FromRole="ServiceRequest_Quote_Line" ToRole="ServiceRequest_Invoice_Line" />
-          <NavigationProperty Name="ServiceRequest_Quote" Relationship="Self.FK_ServiceRequest_Quote_Line_ServiceRequest_Quote" FromRole="ServiceRequest_Quote_Line" ToRole="ServiceRequest_Quote" />
           <NavigationProperty Name="ServiceRequest_Quote_Line_Item" Relationship="Self.FK_ServiceRequest_Quote_Line_Item_ServiceRequest_Quote_Line" FromRole="ServiceRequest_Quote_Line" ToRole="ServiceRequest_Quote_Line_Item" />
+          <NavigationProperty Name="ServiceRequest_Quote" Relationship="JobMeModel.FK_ServiceRequest_Quote_Line_ServiceRequest_Quote" FromRole="ServiceRequest_Quote_Line" ToRole="ServiceRequest_Quote" />
         </EntityType>
         <EntityType Name="ServiceRequest_Quote_Line_Item">
           <Key>
@@ -1038,6 +1019,7 @@ warning 6002: The table/view 'JobMe.dbo.AvailableServices' does not have a prima
           <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="ServiceRequest_Invoice_Line_Item" Relationship="Self.FK_ServiceRequest_Invoice_Line_Item_ServiceRequest_Quote_Line_Item" FromRole="ServiceRequest_Quote_Line_Item" ToRole="ServiceRequest_Invoice_Line_Item" />
           <NavigationProperty Name="ServiceRequest_Quote_Line" Relationship="Self.FK_ServiceRequest_Quote_Line_Item_ServiceRequest_Quote_Line" FromRole="ServiceRequest_Quote_Line_Item" ToRole="ServiceRequest_Quote_Line" />
+          <Property Name="Description" Type="String" MaxLength="450" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="ServiceRequest_Rating">
           <Key>
@@ -1201,18 +1183,6 @@ warning 6002: The table/view 'JobMe.dbo.AvailableServices' does not have a prima
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_ServiceRequest_Quote_ServiceRequest">
-          <End Role="ServiceRequest" Type="Self.ServiceRequest" Multiplicity="1" />
-          <End Role="ServiceRequest_Quote" Type="Self.ServiceRequest_Quote" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ServiceRequest">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="ServiceRequest_Quote">
-              <PropertyRef Name="ServiceRequestId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_ServiceRequest_Rating_ServiceRequest">
           <End Role="ServiceRequest" Type="Self.ServiceRequest" Multiplicity="1" />
           <End Role="ServiceRequest_Rating" Type="Self.ServiceRequest_Rating" Multiplicity="*" />
@@ -1234,18 +1204,6 @@ warning 6002: The table/view 'JobMe.dbo.AvailableServices' does not have a prima
             </Principal>
             <Dependent Role="ServiceRequest_Invoice_Line">
               <PropertyRef Name="ServiceRequestInvoiceId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ServiceRequest_Invoice_ServiceRequest_Quote">
-          <End Role="ServiceRequest_Quote" Type="Self.ServiceRequest_Quote" Multiplicity="0..1" />
-          <End Role="ServiceRequest_Invoice" Type="Self.ServiceRequest_Invoice" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ServiceRequest_Quote">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="ServiceRequest_Invoice">
-              <PropertyRef Name="ServiceRequestQuoteId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1282,18 +1240,6 @@ warning 6002: The table/view 'JobMe.dbo.AvailableServices' does not have a prima
             </Principal>
             <Dependent Role="ServiceRequest_Invoice_Line_Item">
               <PropertyRef Name="ServiceRequestQuoteLineItemId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ServiceRequest_Quote_Line_ServiceRequest_Quote">
-          <End Role="ServiceRequest_Quote" Type="Self.ServiceRequest_Quote" Multiplicity="1" />
-          <End Role="ServiceRequest_Quote_Line" Type="Self.ServiceRequest_Quote_Line" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ServiceRequest_Quote">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="ServiceRequest_Quote_Line">
-              <PropertyRef Name="ServiceRequestQuoteId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1335,7 +1281,6 @@ warning 6002: The table/view 'JobMe.dbo.AvailableServices' does not have a prima
           <EntitySet Name="ServiceRequest_Invoice" EntityType="Self.ServiceRequest_Invoice" />
           <EntitySet Name="ServiceRequest_Invoice_Line" EntityType="Self.ServiceRequest_Invoice_Line" />
           <EntitySet Name="ServiceRequest_Invoice_Line_Item" EntityType="Self.ServiceRequest_Invoice_Line_Item" />
-          <EntitySet Name="ServiceRequest_Quote" EntityType="Self.ServiceRequest_Quote" />
           <EntitySet Name="ServiceRequest_Quote_Line" EntityType="Self.ServiceRequest_Quote_Line" />
           <EntitySet Name="ServiceRequest_Quote_Line_Item" EntityType="Self.ServiceRequest_Quote_Line_Item" />
           <EntitySet Name="ServiceRequest_Rating" EntityType="Self.ServiceRequest_Rating" />
@@ -1378,10 +1323,6 @@ warning 6002: The table/view 'JobMe.dbo.AvailableServices' does not have a prima
             <End Role="ServiceRequest" EntitySet="ServiceRequests" />
             <End Role="ServiceRequest_Invoice" EntitySet="ServiceRequest_Invoice" />
           </AssociationSet>
-          <AssociationSet Name="FK_ServiceRequest_Quote_ServiceRequest" Association="Self.FK_ServiceRequest_Quote_ServiceRequest">
-            <End Role="ServiceRequest" EntitySet="ServiceRequests" />
-            <End Role="ServiceRequest_Quote" EntitySet="ServiceRequest_Quote" />
-          </AssociationSet>
           <AssociationSet Name="FK_ServiceRequest_Rating_ServiceRequest" Association="Self.FK_ServiceRequest_Rating_ServiceRequest">
             <End Role="ServiceRequest" EntitySet="ServiceRequests" />
             <End Role="ServiceRequest_Rating" EntitySet="ServiceRequest_Rating" />
@@ -1389,10 +1330,6 @@ warning 6002: The table/view 'JobMe.dbo.AvailableServices' does not have a prima
           <AssociationSet Name="FK_ServiceRequest_Invoice_Line_ServiceRequest_Invoice" Association="Self.FK_ServiceRequest_Invoice_Line_ServiceRequest_Invoice">
             <End Role="ServiceRequest_Invoice" EntitySet="ServiceRequest_Invoice" />
             <End Role="ServiceRequest_Invoice_Line" EntitySet="ServiceRequest_Invoice_Line" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ServiceRequest_Invoice_ServiceRequest_Quote" Association="Self.FK_ServiceRequest_Invoice_ServiceRequest_Quote">
-            <End Role="ServiceRequest_Quote" EntitySet="ServiceRequest_Quote" />
-            <End Role="ServiceRequest_Invoice" EntitySet="ServiceRequest_Invoice" />
           </AssociationSet>
           <AssociationSet Name="FK_ServiceRequest_Invoice_Line_Item_ServiceRequest_Invoice_Line" Association="Self.FK_ServiceRequest_Invoice_Line_Item_ServiceRequest_Invoice_Line">
             <End Role="ServiceRequest_Invoice_Line" EntitySet="ServiceRequest_Invoice_Line" />
@@ -1405,10 +1342,6 @@ warning 6002: The table/view 'JobMe.dbo.AvailableServices' does not have a prima
           <AssociationSet Name="FK_ServiceRequest_Invoice_Line_Item_ServiceRequest_Quote_Line_Item" Association="Self.FK_ServiceRequest_Invoice_Line_Item_ServiceRequest_Quote_Line_Item">
             <End Role="ServiceRequest_Quote_Line_Item" EntitySet="ServiceRequest_Quote_Line_Item" />
             <End Role="ServiceRequest_Invoice_Line_Item" EntitySet="ServiceRequest_Invoice_Line_Item" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ServiceRequest_Quote_Line_ServiceRequest_Quote" Association="Self.FK_ServiceRequest_Quote_Line_ServiceRequest_Quote">
-            <End Role="ServiceRequest_Quote" EntitySet="ServiceRequest_Quote" />
-            <End Role="ServiceRequest_Quote_Line" EntitySet="ServiceRequest_Quote_Line" />
           </AssociationSet>
           <AssociationSet Name="FK_ServiceRequest_Quote_Line_Item_ServiceRequest_Quote_Line" Association="Self.FK_ServiceRequest_Quote_Line_Item_ServiceRequest_Quote_Line">
             <End Role="ServiceRequest_Quote_Line" EntitySet="ServiceRequest_Quote_Line" />
@@ -1433,6 +1366,19 @@ warning 6002: The table/view 'JobMe.dbo.AvailableServices' does not have a prima
             <End Role="ServiceRequest" EntitySet="ServiceRequests" />
           </AssociationSet>
           <EntitySet Name="AvailableServices" EntityType="JobMeModel.AvailableService" />
+          <EntitySet Name="ServiceRequest_Quote" EntityType="JobMeModel.ServiceRequest_Quote" />
+          <AssociationSet Name="FK_ServiceRequest_Quote_ServiceRequest" Association="JobMeModel.FK_ServiceRequest_Quote_ServiceRequest">
+            <End Role="ServiceRequest" EntitySet="ServiceRequests" />
+            <End Role="ServiceRequest_Quote" EntitySet="ServiceRequest_Quote" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ServiceRequest_Invoice_ServiceRequest_Quote" Association="JobMeModel.FK_ServiceRequest_Invoice_ServiceRequest_Quote">
+            <End Role="ServiceRequest_Quote" EntitySet="ServiceRequest_Quote" />
+            <End Role="ServiceRequest_Invoice" EntitySet="ServiceRequest_Invoice" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ServiceRequest_Quote_Line_ServiceRequest_Quote" Association="JobMeModel.FK_ServiceRequest_Quote_Line_ServiceRequest_Quote">
+            <End Role="ServiceRequest_Quote" EntitySet="ServiceRequest_Quote" />
+            <End Role="ServiceRequest_Quote_Line" EntitySet="ServiceRequest_Quote_Line" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="User">
           <Key>
@@ -1541,6 +1487,64 @@ warning 6002: The table/view 'JobMe.dbo.AvailableServices' does not have a prima
           <Property Name="CalloutFee" Type="Decimal" Precision="19" Scale="4" />
           <Property Name="ServiceProvider_LocationID" Type="Int32" Nullable="false" />
         </EntityType>
+        <EntityType Name="ServiceRequest_Quote">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ServiceRequestId" Type="Int32" Nullable="false" />
+          <Property Name="QuoteNo" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="DateOfQuote" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Subtotal" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="Total" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="Vat" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="Discount" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="DateCreated" Type="DateTime" Precision="3" />
+          <Property Name="CreatedBy" Type="String" MaxLength="450" FixedLength="false" Unicode="true" />
+          <Property Name="DateUpdated" Type="DateTime" Precision="3" />
+          <Property Name="UpdatedBy" Type="String" MaxLength="450" FixedLength="false" Unicode="true" />
+          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+          <Property Name="PaymentGatewayRefNo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="ServiceRequest" Relationship="JobMeModel.FK_ServiceRequest_Quote_ServiceRequest" FromRole="ServiceRequest_Quote" ToRole="ServiceRequest" />
+          <NavigationProperty Name="ServiceRequest_Invoice" Relationship="JobMeModel.FK_ServiceRequest_Invoice_ServiceRequest_Quote" FromRole="ServiceRequest_Quote" ToRole="ServiceRequest_Invoice" />
+          <NavigationProperty Name="ServiceRequest_Quote_Line" Relationship="JobMeModel.FK_ServiceRequest_Quote_Line_ServiceRequest_Quote" FromRole="ServiceRequest_Quote" ToRole="ServiceRequest_Quote_Line" />
+        </EntityType>
+        <Association Name="FK_ServiceRequest_Quote_ServiceRequest">
+          <End Type="JobMeModel.ServiceRequest" Role="ServiceRequest" Multiplicity="1" />
+          <End Type="JobMeModel.ServiceRequest_Quote" Role="ServiceRequest_Quote" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ServiceRequest">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ServiceRequest_Quote">
+              <PropertyRef Name="ServiceRequestId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ServiceRequest_Invoice_ServiceRequest_Quote">
+          <End Type="JobMeModel.ServiceRequest_Quote" Role="ServiceRequest_Quote" Multiplicity="0..1" />
+          <End Type="JobMeModel.ServiceRequest_Invoice" Role="ServiceRequest_Invoice" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ServiceRequest_Quote">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ServiceRequest_Invoice">
+              <PropertyRef Name="ServiceRequestQuoteId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ServiceRequest_Quote_Line_ServiceRequest_Quote">
+          <End Type="JobMeModel.ServiceRequest_Quote" Role="ServiceRequest_Quote" Multiplicity="1" />
+          <End Type="JobMeModel.ServiceRequest_Quote_Line" Role="ServiceRequest_Quote_Line" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ServiceRequest_Quote">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ServiceRequest_Quote_Line">
+              <PropertyRef Name="ServiceRequestQuoteId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1750,25 +1754,6 @@ warning 6002: The table/view 'JobMe.dbo.AvailableServices' does not have a prima
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="ServiceRequest_Quote">
-            <EntityTypeMapping TypeName="JobMeModel.ServiceRequest_Quote">
-              <MappingFragment StoreEntitySet="ServiceRequest_Quote">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="ServiceRequestId" ColumnName="ServiceRequestId" />
-                <ScalarProperty Name="QuoteNo" ColumnName="QuoteNo" />
-                <ScalarProperty Name="DateOfQuote" ColumnName="DateOfQuote" />
-                <ScalarProperty Name="Subtotal" ColumnName="Subtotal" />
-                <ScalarProperty Name="Total" ColumnName="Total" />
-                <ScalarProperty Name="Vat" ColumnName="Vat" />
-                <ScalarProperty Name="Discount" ColumnName="Discount" />
-                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="DateUpdated" ColumnName="DateUpdated" />
-                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
-                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="ServiceRequest_Quote_Line">
             <EntityTypeMapping TypeName="JobMeModel.ServiceRequest_Quote_Line">
               <MappingFragment StoreEntitySet="ServiceRequest_Quote_Line">
@@ -1789,6 +1774,7 @@ warning 6002: The table/view 'JobMe.dbo.AvailableServices' does not have a prima
           <EntitySetMapping Name="ServiceRequest_Quote_Line_Item">
             <EntityTypeMapping TypeName="JobMeModel.ServiceRequest_Quote_Line_Item">
               <MappingFragment StoreEntitySet="ServiceRequest_Quote_Line_Item">
+                <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="ServiceRequestLineId" ColumnName="ServiceRequestLineId" />
                 <ScalarProperty Name="Qty" ColumnName="Qty" />
@@ -1913,6 +1899,26 @@ warning 6002: The table/view 'JobMe.dbo.AvailableServices' does not have a prima
                 <ScalarProperty Name="ServiceProviderId" ColumnName="ServiceProviderId" />
                 <ScalarProperty Name="ServiceType" ColumnName="ServiceType" />
                 <ScalarProperty Name="SubServiceType" ColumnName="SubServiceType" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ServiceRequest_Quote">
+            <EntityTypeMapping TypeName="JobMeModel.ServiceRequest_Quote">
+              <MappingFragment StoreEntitySet="ServiceRequest_Quote">
+                <ScalarProperty Name="PaymentGatewayRefNo" ColumnName="PaymentGatewayRefNo" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="DateUpdated" ColumnName="DateUpdated" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="Discount" ColumnName="Discount" />
+                <ScalarProperty Name="Vat" ColumnName="Vat" />
+                <ScalarProperty Name="Total" ColumnName="Total" />
+                <ScalarProperty Name="Subtotal" ColumnName="Subtotal" />
+                <ScalarProperty Name="DateOfQuote" ColumnName="DateOfQuote" />
+                <ScalarProperty Name="QuoteNo" ColumnName="QuoteNo" />
+                <ScalarProperty Name="ServiceRequestId" ColumnName="ServiceRequestId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

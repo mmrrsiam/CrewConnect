@@ -38,7 +38,6 @@ namespace JobMe
         public virtual DbSet<ServiceRequest_Invoice> ServiceRequest_Invoice { get; set; }
         public virtual DbSet<ServiceRequest_Invoice_Line> ServiceRequest_Invoice_Line { get; set; }
         public virtual DbSet<ServiceRequest_Invoice_Line_Item> ServiceRequest_Invoice_Line_Item { get; set; }
-        public virtual DbSet<ServiceRequest_Quote> ServiceRequest_Quote { get; set; }
         public virtual DbSet<ServiceRequest_Quote_Line> ServiceRequest_Quote_Line { get; set; }
         public virtual DbSet<ServiceRequest_Quote_Line_Item> ServiceRequest_Quote_Line_Item { get; set; }
         public virtual DbSet<ServiceRequest_Rating> ServiceRequest_Rating { get; set; }
@@ -48,5 +47,6 @@ namespace JobMe
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<AspNetUser> AspNetUsers { get; set; }
         public virtual DbSet<AvailableService> AvailableServices { get; set; }
+        public virtual DbSet<ServiceRequest_Quote> ServiceRequest_Quote { get; set; }
     }
 }

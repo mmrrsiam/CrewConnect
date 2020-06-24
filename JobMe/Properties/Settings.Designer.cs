@@ -26,45 +26,45 @@ namespace JobMe.Properties {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string EmailUsername {
+        public string AdminEmail {
             get {
-                return ((string)(this["EmailUsername"]));
+                return ((string)(this["AdminEmail"]));
             }
         }
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string EmailPassword {
+        public string SendGridAPIKey {
             get {
-                return ((string)(this["EmailPassword"]));
+                return ((string)(this["SendGridAPIKey"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("10014300")]
+        public string PayfastMerchantID {
+            get {
+                return ((string)(this["PayfastMerchantID"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("w99vxjyvz0mia")]
+        public string PayfastMerchantKey {
+            get {
+                return ((string)(this["PayfastMerchantKey"]));
             }
         }
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string EmailHostServer {
+        public string AdminUsername {
             get {
-                return ((string)(this["EmailHostServer"]));
-            }
-        }
-        
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool IsSSL {
-            get {
-                return ((bool)(this["IsSSL"]));
-            }
-        }
-        
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0")]
-        public int EmailSMTPPort {
-            get {
-                return ((int)(this["EmailSMTPPort"]));
+                return ((string)(this["AdminUsername"]));
             }
         }
     }

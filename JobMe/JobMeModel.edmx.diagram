@@ -18,10 +18,9 @@
         <EntityTypeShape EntityType="JobMeModel.ServiceRequest_Invoice" Width="1.5" PointX="9.75" PointY="14.125" IsExpanded="true" />
         <EntityTypeShape EntityType="JobMeModel.ServiceRequest_Invoice_Line" Width="1.5" PointX="12" PointY="14.5" IsExpanded="true" />
         <EntityTypeShape EntityType="JobMeModel.ServiceRequest_Invoice_Line_Item" Width="1.5" PointX="14.25" PointY="16.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="JobMeModel.ServiceRequest_Quote" Width="1.5" PointX="7.5" PointY="19" IsExpanded="true" />
         <EntityTypeShape EntityType="JobMeModel.ServiceRequest_Quote_Line" Width="1.5" PointX="9.75" PointY="19.125" IsExpanded="true" />
         <EntityTypeShape EntityType="JobMeModel.ServiceRequest_Quote_Line_Item" Width="1.5" PointX="12" PointY="19.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="JobMeModel.ServiceRequest_Rating" Width="1.5" PointX="7.5" PointY="23.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="JobMeModel.ServiceRequest_Rating" Width="1.5" PointX="7.75" PointY="21.625" IsExpanded="true" />
         <EntityTypeShape EntityType="JobMeModel.ServiceType" Width="1.5" PointX="1.5" PointY="2.375" IsExpanded="true" />
         <EntityTypeShape EntityType="JobMeModel.SouthAfricanCity" Width="1.5" PointX="5.75" PointY="6.75" IsExpanded="true" />
         <EntityTypeShape EntityType="JobMeModel.SubServiceType" Width="1.5" PointX="3.75" PointY="2.25" IsExpanded="true" />
@@ -34,14 +33,11 @@
         <AssociationConnector Association="JobMeModel.FK_ServiceRequest_ServiceProvider_Location" ManuallyRouted="false" />
         <AssociationConnector Association="JobMeModel.FK_ServiceProvider_SubServiceType_SubServiceType" ManuallyRouted="false" />
         <AssociationConnector Association="JobMeModel.FK_ServiceRequest_Invoice_ServiceRequest" ManuallyRouted="false" />
-        <AssociationConnector Association="JobMeModel.FK_ServiceRequest_Quote_ServiceRequest" ManuallyRouted="false" />
         <AssociationConnector Association="JobMeModel.FK_ServiceRequest_Rating_ServiceRequest" ManuallyRouted="false" />
         <AssociationConnector Association="JobMeModel.FK_ServiceRequest_Invoice_Line_ServiceRequest_Invoice" ManuallyRouted="false" />
-        <AssociationConnector Association="JobMeModel.FK_ServiceRequest_Invoice_ServiceRequest_Quote" ManuallyRouted="false" />
         <AssociationConnector Association="JobMeModel.FK_ServiceRequest_Invoice_Line_Item_ServiceRequest_Invoice_Line" ManuallyRouted="false" />
         <AssociationConnector Association="JobMeModel.FK_ServiceRequest_Invoice_Line_ServiceRequest_Quote_Line" ManuallyRouted="false" />
         <AssociationConnector Association="JobMeModel.FK_ServiceRequest_Invoice_Line_Item_ServiceRequest_Quote_Line_Item" ManuallyRouted="false" />
-        <AssociationConnector Association="JobMeModel.FK_ServiceRequest_Quote_Line_ServiceRequest_Quote" ManuallyRouted="false" />
         <AssociationConnector Association="JobMeModel.FK_ServiceRequest_Quote_Line_Item_ServiceRequest_Quote_Line" ManuallyRouted="false" />
         <AssociationConnector Association="JobMeModel.FK_SubServiceType_ServiceType" ManuallyRouted="false" />
         <EntityTypeShape EntityType="JobMeModel.User" Width="1.5" PointX="8.375" PointY="0.75" />
@@ -50,6 +46,10 @@
         <AssociationConnector Association="JobMeModel.FK_ServiceProvider_Recommendation_AspNetUsers" />
         <AssociationConnector Association="JobMeModel.FK_ServiceRequest_AspNetUsers" />
         <EntityTypeShape EntityType="JobMeModel.AvailableService" Width="1.5" PointX="8.375" PointY="3.75" />
+        <EntityTypeShape EntityType="JobMeModel.ServiceRequest_Quote" Width="1.5" PointX="7.5" PointY="15.625" />
+        <AssociationConnector Association="JobMeModel.FK_ServiceRequest_Quote_ServiceRequest" />
+        <AssociationConnector Association="JobMeModel.FK_ServiceRequest_Invoice_ServiceRequest_Quote" />
+        <AssociationConnector Association="JobMeModel.FK_ServiceRequest_Quote_Line_ServiceRequest_Quote" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

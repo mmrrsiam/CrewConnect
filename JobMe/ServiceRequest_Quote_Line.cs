@@ -35,8 +35,8 @@ namespace JobMe
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ServiceRequest_Invoice_Line> ServiceRequest_Invoice_Line { get; set; }
-        public virtual ServiceRequest_Quote ServiceRequest_Quote { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ServiceRequest_Quote_Line_Item> ServiceRequest_Quote_Line_Item { get; set; }
+        public virtual ServiceRequest_Quote ServiceRequest_Quote { get; set; }
     }
 }

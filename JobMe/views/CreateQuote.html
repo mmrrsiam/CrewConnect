@@ -1,10 +1,90 @@
-﻿<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8" />
-    <title></title>
-</head>
-<body>
+﻿<style>
+    .LineHeader {
+        width: 100%;
+        border: 1px solid #d6d6d6;
+        height: 45px;
+        font-size: 20px;
+        border-radius: 0px;
+        margin: 10px 0px;
+        border-left: 0px;
+        background: #e8e8e8;
+        padding-left: 20px;
+        border-right: 0px;
+    }
+        .LineHeader:focus {
+            border: 1px solid #d6d6d6;
+            border-radius: 0px;
+            border-left: 0px;
+            border-right: 0px;
+            outline: none;
+        }
+    .AddItem {
+        position: relative;
+        top: -55px;
+        right: 0px;
+        float: right;
+        display: table;
+        margin-bottom: -25px;
+        height: 44px;
+    }
+    .bt {
+        margin-bottom: 5px;
+    }
+    .header {
+        color: darkgray;
+        font-weight: 500;
+        font-size: 22px;
+        border-bottom: 1px solid lightgray;
+        margin-bottom: 15px;
+    }
+    label {
+        font-weight: 700;
+        color: #27b9b9;
+        margin: 0px 25px;
+    }
+</style>
+<div id="content" class="content-wrapper" style="margin: 30px 10%;overflow:hidden">
+    <div style="margin-bottom:45px">
+        <div style="float:right" id="CreateBtn" class="btn btn-dark" onclick="Create()">Create Quote</div>
+        <div style="float:right;display:none" id="PayBtn" class="btn btn-danger"  onclick="$('FullPayment').submit()">Pay</div>
 
-</body>
-</html>
+        <div class="header">Quote Detail</div>
+        <div>
+            <div class="row">
+                <div class="col-md-5"><div><label>Client Name</label><span>info</span></div></div>
+                <div class="col-md-5"> <div><label>Client Address</label><span>info</span></div></div>
+                <div class="col-md-5"><div><label>Quote Date</label><span>info</span></div></div>
+                <div class="col-md-5"><div><label>Total Amount</label><span id="Total">R0.00</span></div></div>
+            </div>
+        </div>
+    </div>
+    <div id="Lines">
+        <button class="btn btn-dark bg-purple" id="addline" style="width:100%">+ Add Line</button>
+        <div style="margin:0px 30px;display:none" id="FullLine" >
+            <div>
+                <input id="LineHeader" class="LineHeader" type="text" placeholder="Line Description" />
+                <button class="btn btn-dark bg-blue AddItem" id="additem" onclick="AddItem(this);" >+ Add item</button>
+
+            </div>
+            <table width="100%" id="tbl" >
+                <thead>
+                    <tr>
+                        <th width="50%">Description</th>
+                        <th>Rate</th>
+                        <th>Quantity</th>
+                        <th>Amount</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr id="itemRow">
+                        <td><input id="des" class="form-control bt" type="text" placeholder="Item Description"/></td>
+                        <td><input id="rate" class="form-control bt" type="text" placeholder="Rate" onkeyup="Calculate()" /></td>
+                        <td><input id="qty" class="form-control bt" type="text" placeholder="Quantity" onkeyup="Calculate()"/></td>
+                        <td><input id="amt" class="form-control bt" type="text" placeholder="Amount" onkeyup="Calculate()"/></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+

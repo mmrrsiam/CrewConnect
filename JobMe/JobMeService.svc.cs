@@ -1,11 +1,14 @@
 ﻿using AngleSharp.Media.Dom;
 using Newtonsoft.Json;
+using SendGrid;
+using SendGrid.Helpers.Mail;
 using System;
 using System.Collections.Generic;
 using System.Device.Location;
 using System.Drawing;
 using System.EnterpriseServices;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Net;
 using System.Net.Mail;
 using System.Net.Mime;
@@ -26,108 +29,19 @@ namespace JobMe
     public class JobMeService
     {
         private static string CurrentUri = System.Web.HttpContext.Current.Request.Url.AbsoluteUri.Replace(System.Web.HttpContext.Current.Request.Url.PathAndQuery, "");
-        private string Email(List<string> Emails, List<string> Bcc, string subject, string content, List<Attachment> attachments = null, List<string> ImagePaths = null)
+        private async System.Threading.Tasks.Task<string> EmailAsync(string Email, string Name, string subject, string content)
         {
-            try
-            {
-                if (Bcc == null)
-                    Bcc = new List<string>();
-                if (attachments == null)
-                    attachments = new List<Attachment>();
-                if (ImagePaths == null)
-                    ImagePaths = new List<string>();
-                if (Emails.Count == 0)
-                {
-                    return "Unable to send email";
-                }
-                var ToAdd = new List<string>();
-                var ToRemove = new List<string>();
-                foreach (var em in Emails)
-                    if (em.IndexOf(';') >= 0)
-                    {
-                        ToAdd.AddRange(em.Split(';').ToList());
-                        ToRemove.Add(em);
-                    }
-                foreach (var rm in ToRemove)
-                    Emails.Remove(rm);
-                foreach (var ad in ToAdd)
-                    Emails.Add(ad);
-                Emails.RemoveAll(x => (x == "") || (x == ";"));
+            var client = new SendGridClient(Properties.Settings.Default.SendGridAPIKey);
+            var from = new EmailAddress(Properties.Settings.Default.AdminEmail, Properties.Settings.Default.AdminUsername);
+            var to = new EmailAddress(Email, Name);
+            var msg = MailHelper.CreateSingleEmail(from, to, subject, content, content);
+            var response = await client.SendEmailAsync(msg);
 
-                var fromAddress = new MailAddress(Properties.Settings.Default.EmailUsername);
-                string fromPassword = Properties.Settings.Default.EmailPassword;
-                string body = content;
-                var p = new PreMailer.Net.PreMailer(body);
-                body = p.MoveCssInline().Html;
-
-                var smtp = new SmtpClient
-                {
-                    Host = Properties.Settings.Default.EmailHostServer,
-                };
-                if (Properties.Settings.Default.IsSSL)
-                {
-                    smtp.EnableSsl = true;
-                }
-                if (Properties.Settings.Default.EmailPassword != "")
-                {
-                    smtp.Port = Properties.Settings.Default.EmailSMTPPort;
-                    smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
-                    smtp.UseDefaultCredentials = false;
-                    smtp.Credentials = new NetworkCredential(fromAddress.Address, fromPassword);
-                }
-
-                using (var message = new MailMessage(fromAddress, new MailAddress(Emails.First().Trim()))
-                {
-                    Subject = subject,
-                    Body = body
-                })
-                {
-                    message.IsBodyHtml = true;
-                    if (ImagePaths.Count() > 0)
-                    {
-                        int i = 0;
-                        List<LinkedResource> inlines = new List<LinkedResource>();
-                        foreach (var img in ImagePaths)
-                        {
-                            var inline = new LinkedResource(img, System.Net.Mime.MediaTypeNames.Image.Jpeg);
-                            inline.ContentId = Guid.NewGuid().ToString();
-                            inline.ContentType = new System.Net.Mime.ContentType("image/jpg");
-                            message.Body = message.Body.Replace("{ImageSource" + i++ + "}", "cid:" + inline.ContentId);
-                            inlines.Add(inline);
-                        }
-                        AlternateView alternateView = AlternateView.CreateAlternateViewFromString(message.Body, null, MediaTypeNames.Text.Html);
-                        foreach (var inline in inlines)
-                            alternateView.LinkedResources.Add(inline);
-                        message.AlternateViews.Add(alternateView);
-                    }
-                    if (Emails.Count() > 1)
-                        foreach (var mail in Emails.Skip(1))
-                            try
-                            {
-                                if ((mail.Trim() == "") || (mail == ";")) continue;
-                                message.CC.Add(new MailAddress(mail.Trim()));
-                            }
-                            catch (Exception e) { }
-                    foreach (var mail in Bcc)
-                        try
-                        {
-                            if ((mail.Trim() == "") || (mail == ";")) continue;
-                            message.Bcc.Add(new MailAddress(mail.Trim()));
-                        }
-                        catch (Exception e) { }
-
-                    foreach (var att in attachments)
-                        message.Attachments.Add(att);
-                    smtp.Send(message);
-                    smtp.Dispose();
-                }
-            }
-            catch (Exception e)
-            {
-
-                return "Unable to send email (Subject: " + subject + ").\n\n" + e.Message + "\n" + e.InnerException;
-            }
             return "Email Sent";
+        }
+        private async System.Threading.Tasks.Task<string> EmailAsync(UserInfo user, string subject, string content)
+        {
+            return await EmailAsync(user.Email, user.FullName, subject, content);
         }
 
         private string GetCookieValue(string cookieKey)
@@ -343,7 +257,7 @@ namespace JobMe
                     db.ServiceRequests.Add(rq);
                     db.SaveChanges();
 
-                    Email(new List<string>() { rq.ServiceProvider_Location.Email }, null, "You have a new Job oppotunity.", "Link:" + CurrentUri + "/main.html&CreateQuote&RequestID=" + rq.Id);
+                     EmailAsync(rq.ServiceProvider_Location.Email ,"" , "You have a new Job oppotunity.", "Link:" + CurrentUri + "/main.html&CreateQuote&ServiceRequestID=" + rq.Id);
                 }
 
                 return true;
@@ -380,16 +294,38 @@ namespace JobMe
             return "";
 
         }
-            [OperationContract]
+        [OperationContract]
         [WebInvoke(Method = "POST", BodyStyle = WebMessageBodyStyle.WrappedRequest, RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
-        public string CreateQoute(int ServiceRequestID, decimal TotalDiscountPercentage,decimal Vat,string itemsJson)
+        public string GetQuoteInfo(int QuoteID)
         {
             try
             {
                 using (JobMeEntities db = new JobMeEntities())
                 {
-                    var items = JsonConvert.DeserializeObject<Dictionary<string, List<ServiceRequest_Quote_Line_Item>>>(itemsJson);
+                    var info = db.ServiceRequest_Quote.Single(x => x.Id == QuoteID);
+                    return JsonConvert.SerializeObject(info, new JsonSerializerSettings
+                    {
+                        ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+                    });
+                }
 
+            } catch (Exception e)
+            {
+                return "";
+            }
+        }
+
+
+        [OperationContract]
+        [WebInvoke(Method = "POST", BodyStyle = WebMessageBodyStyle.WrappedRequest, RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
+        public string CreateQuote(int ServiceRequestID, decimal TotalDiscountPercentage, decimal Vat, string itemsJson)
+        {
+            try
+            {
+                using (JobMeEntities db = new JobMeEntities())
+                {
+                    itemsJson = itemsJson.TrimStart('['); itemsJson = itemsJson.TrimEnd(']');
+                    var items = JsonConvert.DeserializeObject<Dictionary<string, List<ServiceRequest_Quote_Line_Item>>>(itemsJson);
                     var qt = new ServiceRequest_Quote();
                     qt.ServiceRequestId = ServiceRequestID;
                     qt.QuoteNo = (db.ServiceRequest_Quote.Count() + 1).ToString();
@@ -399,6 +335,7 @@ namespace JobMe
                     qt.Subtotal = qt.Total - qt.Discount.Value;
                     qt.Subtotal -= qt.Subtotal * qt.Vat;
                     qt.IsDeleted = false;
+                    qt.PaymentGatewayRefNo = Guid.NewGuid().ToString();
                     db.ServiceRequest_Quote.Add(qt);
                     db.SaveChanges();
 
@@ -408,24 +345,61 @@ namespace JobMe
                         qtl.Description = line.Key;
                         qtl.IsDeleted = false;
                         qtl.ServiceRequest_Quote = qt;
+                        qtl.PaymentGatewayRefNo = Guid.NewGuid().ToString();
                         foreach (var i in line.Value)
                         {
                             i.ServiceRequest_Quote_Line = qtl;
                             db.ServiceRequest_Quote_Line_Item.Add(i);
                         }
-                        
+
                     }
+                    db.SaveChanges();
+
                     var requester = db.ServiceRequests.Single(x => x.Id == ServiceRequestID).AspNetUser;
 
-                    Email(new List<string>() { requester.Email }, null, "Your quote is ready for requested service.", "Link: " + CurrentUri + "/QuotePayment");
+                    EmailAsync( requester.Email , "", "Your quote is ready for requested service.", "Link: " + CurrentUri + "Main.html/CreateQuote&QuoteID=" + qt.Id);
                 }
                 return "Quote Created";
             }
-            catch
+            catch (Exception e)
             {
                 return "";
             }
         }
+        [OperationContract]
+        [WebInvoke(Method = "POST", BodyStyle = WebMessageBodyStyle.WrappedRequest, RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
+        public string GetPaymentInfo(int QuoteID)
+        {
+            try
+            {
+                using (JobMeEntities db = new JobMeEntities())
+                {
+                    var qt = db.ServiceRequest_Quote.Single(x => x.Id == QuoteID);
+                    var requester = db.ServiceRequests.Single(x => x.Id == qt.ServiceRequestId).AspNetUser;
 
+                    StringBuilder str = new StringBuilder();
+                    str.AppendFormat(@"<form id='FullPayment' action='https://sandbox.payfast.co.za/eng/process' method='POST'>
+                                       <input type='hidden' name='merchant_id' value='{0}'>
+                                       <input type='hidden' name='merchant_key' value='{1}'>
+                                       <input type='hidden' name='return_url' value='{2}'>", Properties.Settings.Default.PayfastMerchantID, Properties.Settings.Default.PayfastMerchantKey,
+                                                                          CurrentUri + "/main.html&PaymentDone&PaymentID=" + qt.PaymentGatewayRefNo);
+
+                    str.AppendFormat(@"<input type='hidden' name='name_first' value='{0}'>
+                                       <input type='hidden' name='name_last' value='{1}'>
+                                       <input type='hidden' name='email_address' value='{2}'>
+                                       <input type='hidden' name='cell_number' value='{3}'>", requester.FirstName, requester, requester.Surname, requester.Email, requester.PhoneNumber);
+
+                    str.AppendFormat(@"<input type='hidden' name='m_payment_id' value='{0}'>
+                                       <input type='hidden' name='amount' value='{1}'>
+                                       <input type='hidden' name='item_name' value='{2}'>", qt.PaymentGatewayRefNo, qt.Total, "Quote No: " + qt.QuoteNo);
+
+                    return str.ToString();
+                }
+            }
+            catch (Exception e)
+            {
+                return "";
+            }
+        }
     }
 }
